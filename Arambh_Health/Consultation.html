@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Consultation - JeevanSetu</title>
+
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar Toggle Button -->
+    <button  type="button" class="sidebar-toggle-btn"  id="sidebarToggleBtn" aria-label="Toggle Sidebar" title="Toggle Sidebar">
+        <span class="sidebar-toggle-icon"></span>
+    </button>
+
+    <!-- Main Layout -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-top">
+
+                <div class="sidebar-logo">
+                    <h2>JeevanSetu</h2>
+                    <p>Patient Management System</p>
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-menu">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="Patient.html" id="addPatientLink">
+                    Add Patient
+                </a>
+
+                <a href="Consultation.html" class="active">
+                    Consultation
+                </a>
+
+                <a href="manage-staff.html" id="adminWorkLink">
+                    Admin Work
+                </a>
+
+            </nav>
+
+
+            <!-- Logout -->
+            <div class="sidebar-bottom">
+
+                <button
+                    id="logoutBtn"
+                    class="logout-btn"
+                    type="button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <div class="page-header">
+
+                <h1>Patient Consultation</h1>
+
+                <p>
+                    Record and review patient case details.
+                </p>
+
+            </div>
+
+
+            <section class="consultation-layout">
+
+                <!-- Left Side -->
+                <div class="consultation-main">
+
+
+                    <!-- Patient Search -->
+                    <section class="form-card">
+
+                        <div class="form-group">
+
+                            <label for="patientSearchInput">
+                                Search Patient
+                            </label>
+
+                            <input
+                                type="text"
+                                id="patientSearchInput"
+                                list="patientDatalist"
+                                placeholder="Search by patient name or ID"
+                            >
+
+                            <datalist id="patientDatalist"></datalist>
+
+                        </div>
+
+
+                        <!-- Selected Patient Information -->
+                        <div
+                            id="selectedPatientInfo"
+                            class="selected-patient-info"
+                        >
+
+                            <h2>Patient Details</h2>
+
+                            <p>
+                                Search for a patient using their Name or ID
+                                to view history.
+                            </p>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Consultation Form -->
+                    <section class="form-card">
+
+                        <h2>Case-Taking Form</h2>
+
+
+                        <form id="consultationForm">
+
+
+                            <div class="form-group">
+
+                                <label for="chiefComplaint">
+                                    Chief Complaint
+                                </label>
+
+                                <textarea
+                                    id="chiefComplaint"
+                                    placeholder="Enter chief complaint"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="presentIllness">
+                                    History of Present Illness
+                                </label>
+
+                                <textarea
+                                    id="presentIllness"
+                                    placeholder="Enter present illness details"
+                                ></textarea>
+
+                            </div>
+
+
+                            <!-- AI Button -->
+                            <button
+                                type="button"
+                                id="aiStructureBtn"
+                                class="ai-btn"
+                            >
+                                Structure Symptoms
+                            </button>
+
+
+                            <!-- AI Result -->
+                            <div
+                                id="aiResultCard"
+                                class="ai-result-card"
+                                style="display: none;"
+                            >
+
+                                <h3>Structured Information</h3>
+
+                                <p>
+                                    <strong>Complaint:</strong>
+                                    <span id="aiComplaint"></span>
+                                </p>
+
+                                <p>
+                                    <strong>Duration:</strong>
+                                    <span id="aiDuration"></span>
+                                </p>
+
+                                <p>
+                                    <strong>Symptoms:</strong>
+                                    <span id="aiSymptoms"></span>
+                                </p>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="medicalHistory">
+                                    Medical History
+                                </label>
+
+                                <textarea
+                                    id="medicalHistory"
+                                    placeholder="Enter medical history"
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="familyHistory">
+                                    Family History
+                                </label>
+
+                                <textarea
+                                    id="familyHistory"
+                                    placeholder="Enter family history"
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="physicalExamination">
+                                    Physical Examination
+                                </label>
+
+                                <textarea
+                                    id="physicalExamination"
+                                    placeholder="Enter physical examination details"
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="doctorNotes">
+                                    Doctor Notes
+                                </label>
+
+                                <textarea
+                                    id="doctorNotes"
+                                    placeholder="Enter doctor notes"
+                                ></textarea>
+
+                            </div>
+
+
+                            <!-- Form Actions -->
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="primary-btn"
+                                >
+                                    Save Consultation
+                                </button>
+
+                            </div>
+
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+
+                <!-- Right Side: History -->
+                <aside class="history-panel">
+
+                    <h2>Past Consultations</h2>
+
+
+                    <div id="consultationHistory">
+
+                        <p class="empty-message">
+                            Search for a patient to view their consultation history.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="Script.js"></script>
+
+</body>
+</html>
