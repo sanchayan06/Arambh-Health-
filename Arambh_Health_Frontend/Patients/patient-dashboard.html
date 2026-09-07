@@ -1,0 +1,1474 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arambh Health - Patient Dashboard</title>
+
+    <link rel="stylesheet" href="patient-dashboard.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <img
+                src="../Artifacts/Arambh_Health_logo.png"
+                alt="Arambh Health"
+            >
+
+            <div>
+                <h2>Arambh Health</h2>
+                <span>Patient Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="nav-item active"
+                onclick="showSection('overview', this)"
+            >
+                <span>▦</span>
+                Dashboard
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('doctors', this)"
+            >
+                <span>+</span>
+                Find Doctors
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('hospitals', this)"
+            >
+                <span>⌂</span>
+                Hospitals
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('consultations', this)"
+            >
+                <span>□</span>
+                My Consultations
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('medical-history', this)"
+            >
+                <span>◉</span>
+                Medical History
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('records', this)"
+            >
+                <span>▤</span>
+                Consultation Records
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="showSection('profile', this)"
+            >
+                <span>○</span>
+                My Profile
+            </button>
+
+
+            <button
+                class="nav-item"
+                onclick="openBookingModal()"
+            >
+                <span>＋</span>
+                Book Consultation
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="main-content">
+
+        <!-- =========================================
+             TOP BAR
+        ========================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="topbar-label">
+                    Patient Portal
+                </span>
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="patient-profile">
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    P
+                </div>
+
+                <div class="profile-info">
+
+                    <strong id="patientName">
+                        Patient
+                    </strong>
+
+                    <span>
+                        Patient
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================================
+             DASHBOARD OVERVIEW
+        ========================================== -->
+
+        <section
+            id="overview"
+            class="dashboard-section active-section"
+        >
+
+            <div class="welcome-box">
+
+                <div>
+
+                    <span class="welcome-small">
+                        Welcome back
+                    </span>
+
+                    <h2 id="welcomeName">
+                        Patient
+                    </h2>
+
+                    <p>
+                        Manage your health records, find verified
+                        doctors, and book consultations.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="openBookingModal()"
+                >
+                    Book Consultation
+                </button>
+
+            </div>
+
+
+            <!-- =====================================
+                 STAT CARDS
+            ====================================== -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        +
+                    </div>
+
+                    <div>
+                        <span>Total Requests</span>
+                        <strong id="totalConsultations">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ◷
+                    </div>
+
+                    <div>
+                        <span>Pending</span>
+                        <strong id="pendingConsultations">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <span>Confirmed</span>
+                        <strong id="confirmedConsultations">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        #
+                    </div>
+
+                    <div>
+                        <span>Patient ID</span>
+                        <strong id="patientId">--</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 QUICK ACTIONS
+            ====================================== -->
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Access your most-used patient services</p>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <button
+                    class="quick-action-card"
+                    onclick="showSectionById('doctors')"
+                >
+
+                    <span class="quick-action-icon">
+                        +
+                    </span>
+
+                    <strong>Find a Doctor</strong>
+
+                    <small>
+                        Search verified doctors
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="quick-action-card"
+                    onclick="openBookingModal()"
+                >
+
+                    <span class="quick-action-icon">
+                        ＋
+                    </span>
+
+                    <strong>Book Consultation</strong>
+
+                    <small>
+                        Request a new consultation
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="quick-action-card"
+                    onclick="showSectionById('medical-history')"
+                >
+
+                    <span class="quick-action-icon">
+                        ◉
+                    </span>
+
+                    <strong>Medical History</strong>
+
+                    <small>
+                        View your health timeline
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="quick-action-card"
+                    onclick="showSectionById('records')"
+                >
+
+                    <span class="quick-action-icon">
+                        ▤
+                    </span>
+
+                    <strong>Health Records</strong>
+
+                    <small>
+                        View finalized records
+                    </small>
+
+                </button>
+
+            </div>
+
+
+            <!-- =====================================
+                 UPCOMING CONSULTATION
+            ====================================== -->
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Upcoming Consultation</h2>
+                    <p>Your next confirmed consultation</p>
+                </div>
+
+                <button
+                    class="text-btn"
+                    onclick="showSectionById('consultations')"
+                >
+                    View all
+                </button>
+
+            </div>
+
+
+            <div id="upcomingContainer">
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ◷
+                    </div>
+
+                    <h3>No upcoming consultation</h3>
+
+                    <p>
+                        Book a consultation with a doctor
+                        to get started.
+                    </p>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="showSectionById('doctors')"
+                    >
+                        Find a Doctor
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             FIND DOCTORS
+        ========================================== -->
+
+        <section
+            id="doctors"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Find Doctors</h2>
+
+                    <p>
+                        Search verified doctors by hospital,
+                        name, or specialization.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 DOCTOR SEARCH
+            ====================================== -->
+
+            <div class="filter-box">
+
+                <div class="filter-group">
+
+                    <label for="hospitalFilter">
+                        Hospital
+                    </label>
+
+                    <select id="hospitalFilter">
+
+                        <option value="">
+                            All Hospitals
+                        </option>
+
+                        <option value="AIIMS - New Delhi">
+                            AIIMS - New Delhi
+                        </option>
+
+                        <option value="Apollo Hospitals">
+                            Apollo Hospitals
+                        </option>
+
+                        <option value="Fortis Healthcare">
+                            Fortis Healthcare
+                        </option>
+
+                        <option value="Max Super Speciality Hospital">
+                            Max Super Speciality Hospital
+                        </option>
+
+                        <option value="Manipal Hospital">
+                            Manipal Hospital
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="doctorSearch">
+                        Doctor Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="doctorSearch"
+                        placeholder="Search doctor name..."
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="specializationFilter">
+                        Designation / Specialization
+                    </label>
+
+                    <select id="specializationFilter">
+
+                        <option value="">
+                            All Specializations
+                        </option>
+
+                        <option value="Cardiologist">
+                            Cardiologist
+                        </option>
+
+                        <option value="Dermatologist">
+                            Dermatologist
+                        </option>
+
+                        <option value="Neurologist">
+                            Neurologist
+                        </option>
+
+                        <option value="Pediatrician">
+                            Pediatrician
+                        </option>
+
+                        <option value="Orthopedic Surgeon">
+                            Orthopedic Surgeon
+                        </option>
+
+                        <option value="General Physician">
+                            General Physician
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 VERIFICATION STATUS
+            ====================================== -->
+
+            <div class="verification-note">
+
+                <strong>Verified Doctors</strong>
+
+                <span>
+                    Only doctors verified by Arambh Health
+                    are displayed for consultation requests.
+                </span>
+
+            </div>
+
+
+            <!-- =====================================
+                 DOCTOR LIST
+            ====================================== -->
+
+            <div
+                id="doctorList"
+                class="doctor-grid"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================================
+             HOSPITALS
+        ========================================== -->
+
+        <section
+            id="hospitals"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Hospitals</h2>
+
+                    <p>
+                        View hospitals available on
+                        Arambh Health.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-box">
+
+                <div class="filter-group">
+
+                    <label for="hospitalSearch">
+                        Search Hospital
+                    </label>
+
+                    <input
+                        type="text"
+                        id="hospitalSearch"
+                        placeholder="Search hospital name..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="hospitalList"
+                class="hospital-grid"
+            >
+
+                <!-- Hospitals will be populated by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             MY CONSULTATIONS
+        ========================================== -->
+
+        <section
+            id="consultations"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>My Consultations</h2>
+
+                    <p>
+                        Track your consultation requests
+                        and appointments.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-btn small-btn"
+                    onclick="openBookingModal()"
+                >
+                    + New Consultation
+                </button>
+
+            </div>
+
+
+            <!-- =====================================
+                 CONSULTATION STATUS
+            ====================================== -->
+
+            <div class="consultation-tabs">
+
+                <button
+                    class="consultation-tab active"
+                    onclick="filterConsultations('all', this)"
+                >
+                    All
+                </button>
+
+                <button
+                    class="consultation-tab"
+                    onclick="filterConsultations('Pending', this)"
+                >
+                    Pending
+                </button>
+
+                <button
+                    class="consultation-tab"
+                    onclick="filterConsultations('Confirmed', this)"
+                >
+                    Confirmed
+                </button>
+
+                <button
+                    class="consultation-tab"
+                    onclick="filterConsultations('Completed', this)"
+                >
+                    Completed
+                </button>
+
+                <button
+                    class="consultation-tab"
+                    onclick="filterConsultations('Cancelled', this)"
+                >
+                    Cancelled
+                </button>
+
+            </div>
+
+
+            <div id="consultationList"></div>
+
+        </section>
+
+
+        <!-- =========================================
+             MEDICAL HISTORY
+        ========================================== -->
+
+        <section
+            id="medical-history"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Medical History</h2>
+
+                    <p>
+                        View your medical history and
+                        patient timeline.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 PATIENT SUMMARY
+            ====================================== -->
+
+            <div class="medical-summary">
+
+                <div class="summary-item">
+
+                    <span>Patient ID</span>
+
+                    <strong id="historyPatientId">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>Blood Group</span>
+
+                    <strong id="patientBloodGroup">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>Allergies</span>
+
+                    <strong id="patientAllergies">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>Last Consultation</span>
+
+                    <strong id="lastConsultation">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 MEDICAL TIMELINE
+            ====================================== -->
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Patient Timeline</h2>
+
+                    <p>
+                        Your recorded illnesses, treatments,
+                        consultations, and follow-ups.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="medicalTimeline"
+                class="medical-timeline"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ◉
+                    </div>
+
+                    <h3>No medical history available</h3>
+
+                    <p>
+                        Your medical records will appear here
+                        after they are added by authorized doctors.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             CONSULTATION RECORDS
+        ========================================== -->
+
+        <section
+            id="records"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Consultation Records</h2>
+
+                    <p>
+                        View consultation records finalized
+                        by your doctors.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="consultationRecords"
+                class="records-list"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ▤
+                    </div>
+
+                    <h3>No finalized records</h3>
+
+                    <p>
+                        Completed consultation records will
+                        appear here after being finalized by
+                        the doctor.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             MY PROFILE
+        ========================================== -->
+
+        <section
+            id="profile"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>My Profile</h2>
+
+                    <p>
+                        View and manage your basic personal
+                        information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-card">
+
+                <div class="profile-card-header">
+
+                    <div
+                        class="large-profile-avatar"
+                        id="largeProfileAvatar"
+                    >
+                        P
+                    </div>
+
+                    <div>
+
+                        <h2 id="profileDisplayName">
+                            Patient
+                        </h2>
+
+                        <span>
+                            Patient Account
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <form id="profileForm">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="profileName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileName"
+                                name="profileName"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileDob">
+                                Date of Birth
+                            </label>
+
+                            <input
+                                type="date"
+                                id="profileDob"
+                                name="profileDob"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileAge">
+                                Age
+                            </label>
+
+                            <input
+                                type="number"
+                                id="profileAge"
+                                name="profileAge"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileSex">
+                                Sex
+                            </label>
+
+                            <select
+                                id="profileSex"
+                                name="profileSex"
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profilePhone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="profilePhone"
+                                name="profilePhone"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileEmail">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="profileEmail"
+                                name="profileEmail"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileBloodGroup">
+                                Blood Group
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileBloodGroup"
+                                name="profileBloodGroup"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileAddress">
+                                Address
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileAddress"
+                                name="profileAddress"
+                                readonly
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            id="editProfileBtn"
+                            onclick="enableProfileEditing()"
+                        >
+                            Edit Profile
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                            id="saveProfileBtn"
+                            style="display: none;"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         BOOKING MODAL
+    ========================================== -->
+
+    <div
+        id="bookingModal"
+        class="modal-overlay"
+    >
+
+        <div class="booking-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        New Consultation
+                    </span>
+
+                    <h2>Book a Doctor</h2>
+
+                </div>
+
+
+                <button
+                    class="close-btn"
+                    onclick="closeBookingModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="bookingForm">
+
+                <!-- =================================
+                     HOSPITAL
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="bookingHospital">
+                        Hospital
+                    </label>
+
+                    <select
+                        id="bookingHospital"
+                        required
+                        onchange="updateBookingDoctors()"
+                    >
+
+                        <option value="">
+                            Select hospital
+                        </option>
+
+                        <option value="AIIMS - New Delhi">
+                            AIIMS - New Delhi
+                        </option>
+
+                        <option value="Apollo Hospitals">
+                            Apollo Hospitals
+                        </option>
+
+                        <option value="Fortis Healthcare">
+                            Fortis Healthcare
+                        </option>
+
+                        <option value="Max Super Speciality Hospital">
+                            Max Super Speciality Hospital
+                        </option>
+
+                        <option value="Manipal Hospital">
+                            Manipal Hospital
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================
+                     DOCTOR
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="bookingDoctor">
+                        Doctor
+                    </label>
+
+                    <select
+                        id="bookingDoctor"
+                        required
+                    >
+
+                        <option value="">
+                            Select a hospital first
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================
+                     AVAILABLE SLOT
+                ================================== -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="bookingDate">
+                            Preferred Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="bookingDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bookingTime">
+                            Available Slot
+                        </label>
+
+                        <select
+                            id="bookingTime"
+                            required
+                        >
+
+                            <option value="">
+                                Select time
+                            </option>
+
+                            <option value="09:00 AM">
+                                09:00 AM
+                            </option>
+
+                            <option value="10:00 AM">
+                                10:00 AM
+                            </option>
+
+                            <option value="11:00 AM">
+                                11:00 AM
+                            </option>
+
+                            <option value="12:00 PM">
+                                12:00 PM
+                            </option>
+
+                            <option value="02:00 PM">
+                                02:00 PM
+                            </option>
+
+                            <option value="03:00 PM">
+                                03:00 PM
+                            </option>
+
+                            <option value="04:00 PM">
+                                04:00 PM
+                            </option>
+
+                            <option value="05:00 PM">
+                                05:00 PM
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     CONSULTATION TYPE
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="consultationType">
+                        Consultation Type
+                    </label>
+
+                    <select
+                        id="consultationType"
+                        required
+                    >
+
+                        <option value="">
+                            Select consultation type
+                        </option>
+
+                        <option value="Online">
+                            Online Consultation
+                        </option>
+
+                        <option value="Hospital">
+                            Hospital Visit
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================
+                     REASON
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="bookingReason">
+                        Reason for Consultation
+                    </label>
+
+                    <textarea
+                        id="bookingReason"
+                        rows="4"
+                        placeholder="Briefly describe why you want to consult the doctor..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- =================================
+                     NOTICE
+                ================================== -->
+
+                <div class="booking-notice">
+
+                    Your request will initially be marked as
+                    <strong>Pending</strong>.
+
+                    The selected doctor must accept and verify
+                    your request before the consultation is
+                    confirmed.
+
+                </div>
+
+
+                <!-- =================================
+                     ACTIONS
+                ================================== -->
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="closeBookingModal()"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Request Consultation
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         CONSULTATION DETAILS MODAL
+    ========================================== -->
+
+    <div
+        id="consultationDetailsModal"
+        class="modal-overlay"
+    >
+
+        <div class="booking-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        Consultation
+                    </span>
+
+                    <h2>Consultation Details</h2>
+
+                </div>
+
+
+                <button
+                    class="close-btn"
+                    onclick="closeConsultationDetails()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div id="consultationDetailsContent">
+
+                <!-- Details populated by JavaScript -->
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeConsultationDetails()"
+                >
+                    Close
+                </button>
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    id="joinConsultationBtn"
+                    style="display: none;"
+                >
+                    Join Online Consultation
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="patient-dashboard.js"></script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JeevanSetu - Admin Dashboard</title>
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --background:#f7faff;
+    --white:#ffffff;
+    --primary:#398fe0;
+    --primary-dark:#267dce;
+    --primary-light:#e8f4ff;
+    --text:#14213d;
+    --heading:#102444;
+    --secondary:#64748b;
+    --muted:#94a3b8;
+    --border:#d7e0ea;
+    --light-border:#e6edf5;
+    --success:#16834b;
+    --success-bg:#eaf8f0;
+    --warning:#a47700;
+    --warning-bg:#fffbea;
+    --danger:#dc3545;
+    --danger-bg:#fff0f1;
+    --shadow:0 8px 25px rgba(20,50,90,.07);
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--background);
+    color:var(--text);
+    min-height:100vh;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+.dashboard-layout{
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:var(--white);
+    border-right:1px solid var(--light-border);
+    display:flex;
+    flex-direction:column;
+    z-index:1000;
+    transition:.25s ease;
+}
+
+.sidebar-brand{
+    height:90px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-bottom:1px solid var(--light-border);
+}
+
+.brand-mark{
+    width:52px;
+    height:52px;
+    border-radius:13px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    font-weight:800;
+    border:1px solid #cfe6fa;
+}
+
+.sidebar-brand h2{
+    color:var(--heading);
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.sidebar-brand span{
+    color:var(--secondary);
+    font-size:10px;
+}
+
+.sidebar-nav{
+    padding:25px 15px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:45px;
+    padding:0 15px;
+    border:0;
+    border-radius:8px;
+    background:transparent;
+    color:var(--secondary);
+    font-size:13px;
+    font-weight:600;
+    text-align:left;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:.2s ease;
+}
+
+.nav-item span{
+    width:20px;
+    font-size:17px;
+    text-align:center;
+}
+
+.nav-item:hover{
+    background:var(--primary-light);
+    color:var(--primary-dark);
+}
+
+.nav-item.active{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.nav-item.active span{color:var(--primary);}
+
+.sidebar-bottom{
+    margin-top:auto;
+    padding:20px 15px;
+    border-top:1px solid var(--light-border);
+}
+
+.logout-btn{
+    width:100%;
+    height:42px;
+    border:1px solid #f0c9cd;
+    border-radius:8px;
+    background:#fff7f7;
+    color:var(--danger);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.logout-btn:hover{background:var(--danger-bg);}
+
+.main-content{
+    margin-left:245px;
+    min-height:100vh;
+    padding:0 40px 50px;
+    transition:.25s ease;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+.topbar{
+    height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--light-border);
+    margin-bottom:30px;
+}
+
+.topbar-label{
+    display:block;
+    color:var(--secondary);
+    font-size:11px;
+    margin-bottom:4px;
+}
+
+.topbar h1{
+    font-size:26px;
+    color:var(--heading);
+}
+
+.admin-profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.profile-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:700;
+}
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.profile-info strong{
+    color:var(--heading);
+    font-size:13px;
+}
+
+.profile-info span{
+    color:var(--secondary);
+    font-size:11px;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+.dashboard-section{display:none;}
+.dashboard-section.active-section{display:block;}
+
+.page-intro{
+    margin-bottom:25px;
+}
+
+.page-intro h2{
+    color:var(--heading);
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.page-intro p{
+    color:var(--secondary);
+    font-size:12px;
+    line-height:1.6;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+.welcome-box{
+    padding:28px 30px;
+    background:linear-gradient(110deg,#eef7ff,#fff);
+    border:1px solid #dbeaf7;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+    margin-bottom:25px;
+}
+
+.welcome-small{
+    color:var(--primary);
+    font-size:12px;
+    font-weight:600;
+}
+
+.welcome-box h2{
+    color:var(--heading);
+    font-size:25px;
+    margin:5px 0 7px;
+}
+
+.welcome-box p{
+    color:var(--secondary);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.primary-btn,.secondary-btn,.danger-btn{
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.primary-btn{
+    height:44px;
+    padding:0 18px;
+    border:0;
+    background:var(--primary);
+    color:#fff;
+}
+
+.primary-btn:hover{
+    background:var(--primary-dark);
+    transform:translateY(-1px);
+}
+
+.secondary-btn{
+    height:42px;
+    padding:0 16px;
+    border:1px solid #bcd8ed;
+    background:#fff;
+    color:var(--primary-dark);
+}
+
+.secondary-btn:hover{background:var(--primary-light);}
+
+.danger-btn{
+    height:40px;
+    padding:0 15px;
+    border:1px solid #f0c9cd;
+    background:#fff7f7;
+    color:var(--danger);
+}
+
+.danger-btn:hover{background:var(--danger-bg);}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.stat-card{
+    min-height:105px;
+    padding:20px;
+    background:var(--white);
+    border:1px solid var(--light-border);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    transition:.2s ease;
+}
+
+.stat-card:hover{
+    border-color:#c9e0f2;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+    border-radius:9px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    font-weight:700;
+}
+
+.stat-card span{
+    display:block;
+    color:var(--secondary);
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.stat-card strong{
+    color:var(--heading);
+    font-size:20px;
+}
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+.quick-actions{
+    margin-bottom:35px;
+}
+
+.section-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    gap:15px;
+}
+
+.section-heading h2{
+    color:var(--heading);
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.section-heading p{
+    color:var(--secondary);
+    font-size:12px;
+}
+
+.quick-action-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.quick-action-card{
+    min-height:105px;
+    padding:20px;
+    border:1px solid var(--light-border);
+    border-radius:12px;
+    background:#fff;
+    color:var(--heading);
+    cursor:pointer;
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:.2s ease;
+}
+
+.quick-action-card:hover{
+    background:var(--primary-light);
+    border-color:#c3dff3;
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+}
+
+.quick-action-icon{
+    width:42px;
+    height:42px;
+    margin-bottom:15px;
+    border-radius:9px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.quick-action-card h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.quick-action-card p{
+    color:var(--secondary);
+    font-size:11px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   CARDS / TABLES
+========================================================= */
+.content-card{
+    background:#fff;
+    border:1px solid var(--light-border);
+    border-radius:12px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.card-header{
+    padding:20px;
+    border-bottom:1px solid var(--light-border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.card-header h3{
+    color:var(--heading);
+    font-size:16px;
+    margin-bottom:4px;
+}
+
+.card-header p{
+    color:var(--secondary);
+    font-size:11px;
+}
+
+.search-box{
+    width:260px;
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0 12px;
+    outline:none;
+    color:var(--text);
+    background:#fff;
+}
+
+.search-box:focus,
+.form-control:focus{
+    border-color:#459de8;
+    box-shadow:0 0 0 3px rgba(69,157,232,.12);
+}
+
+.table-container{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:720px;
+}
+
+th,td{
+    padding:14px 18px;
+    text-align:left;
+    border-bottom:1px solid var(--light-border);
+    font-size:11px;
+    vertical-align:middle;
+}
+
+th{
+    background:#f9fbfd;
+    color:var(--secondary);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+}
+
+td{color:var(--text);}
+tr:last-child td{border-bottom:0;}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.status.active{background:var(--success-bg);color:var(--success);}
+.status.pending{background:var(--warning-bg);color:var(--warning);}
+.status.suspended,.status.cancelled{background:var(--danger-bg);color:var(--danger);}
+
+.empty-state{
+    padding:45px 20px;
+    text-align:center;
+    color:var(--secondary);
+}
+
+.empty-icon{
+    width:52px;
+    height:52px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.empty-state h3{
+    color:var(--heading);
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.empty-state p{
+    font-size:12px;
+}
+
+/* =========================================================
+   STAFF
+========================================================= */
+.action-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.filter-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.filter-select{
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0 12px;
+    color:var(--text);
+    background:#fff;
+}
+
+.staff-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.mini-btn{
+    height:32px;
+    padding:0 10px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    background:#fff;
+    color:var(--primary-dark);
+    font-size:10px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.mini-btn:hover{background:var(--primary-light);}
+
+.mini-btn.danger{
+    color:var(--danger);
+    border-color:#f0c9cd;
+}
+
+.mini-btn.danger:hover{background:var(--danger-bg);}
+
+/* =========================================================
+   FORMS / MODALS
+========================================================= */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,35,60,.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:5000;
+}
+
+.modal-overlay.show{display:flex;}
+
+.modal{
+    width:100%;
+    max-width:620px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#fff;
+    border-radius:16px;
+    padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.18);
+    animation:modalAppear .2s ease;
+}
+
+.modal.small{max-width:480px;}
+
+@keyframes modalAppear{
+    from{opacity:0;transform:translateY(15px) scale(.98);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.modal-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    margin-bottom:22px;
+}
+
+.modal-header h2{
+    color:var(--heading);
+    font-size:21px;
+    margin-bottom:4px;
+}
+
+.modal-header p{
+    color:var(--secondary);
+    font-size:11px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:50%;
+    background:#f1f5f9;
+    color:var(--secondary);
+    font-size:20px;
+    cursor:pointer;
+}
+
+.close-btn:hover{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{grid-column:1/-1;}
+
+.form-group label{
+    color:#243b5a;
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-control{
+    width:100%;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0 12px;
+    background:#fff;
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:13px;
+    outline:none;
+}
+
+textarea.form-control{
+    height:auto;
+    min-height:90px;
+    padding:12px;
+    resize:vertical;
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:22px;
+}
+
+.notice{
+    padding:12px 14px;
+    border:1px solid #f0d98a;
+    border-radius:9px;
+    background:#fffbea;
+    color:#665315;
+    font-size:11px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+/* =========================================================
+   AUDIT / MANAGEMENT
+========================================================= */
+.management-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.management-card{
+    padding:22px;
+    background:#fff;
+    border:1px solid var(--light-border);
+    border-radius:12px;
+}
+
+.management-card h3{
+    color:var(--heading);
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.management-card p{
+    color:var(--secondary);
+    font-size:11px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.audit-row{
+    display:grid;
+    grid-template-columns:150px 1fr 120px 110px;
+    gap:15px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--light-border);
+    align-items:center;
+}
+
+.audit-row:last-child{border-bottom:0;}
+
+.audit-time{
+    color:var(--secondary);
+    font-size:10px;
+}
+
+.audit-action{
+    color:var(--heading);
+    font-size:11px;
+    font-weight:600;
+}
+
+.audit-user{
+    color:var(--text);
+    font-size:10px;
+}
+
+.audit-type{
+    color:var(--primary);
+    font-size:10px;
+    font-weight:700;
+}
+
+/* =========================================================
+   PATIENT RECORD VIEW
+========================================================= */
+.patient-summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    padding:20px;
+}
+
+.summary-item{
+    padding:14px;
+    border:1px solid var(--light-border);
+    border-radius:9px;
+    background:#f9fbfd;
+}
+
+.summary-item span{
+    display:block;
+    color:var(--secondary);
+    font-size:10px;
+    margin-bottom:6px;
+}
+
+.summary-item strong{
+    color:var(--heading);
+    font-size:13px;
+}
+
+.history-item{
+    padding:18px 20px;
+    border-bottom:1px solid var(--light-border);
+}
+
+.history-item:last-child{border-bottom:0;}
+
+.history-item h4{
+    color:var(--heading);
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.history-item p{
+    color:var(--secondary);
+    font-size:11px;
+    line-height:1.6;
+}
+
+.patient-search-result{
+    padding:14px 16px;
+    border-bottom:1px solid var(--light-border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.patient-search-result:last-child{border-bottom:0;}
+
+.patient-search-result strong{
+    color:var(--heading);
+    font-size:12px;
+}
+
+.patient-search-result span{
+    color:var(--secondary);
+    font-size:10px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    min-width:250px;
+    max-width:360px;
+    padding:13px 16px;
+    border-radius:9px;
+    background:#14213d;
+    color:#fff;
+    font-size:12px;
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    transition:.25s ease;
+    z-index:7000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+
+/* =========================================================
+   MOBILE SIDEBAR TOGGLE
+========================================================= */
+.sidebar-toggle{
+    display:none;
+    position:fixed;
+    left:15px;
+    top:15px;
+    z-index:2000;
+    width:42px;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:#fff;
+    color:var(--heading);
+    cursor:pointer;
+    font-size:19px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media(max-width:1100px){
+    .main-content{padding-left:30px;padding-right:30px;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .quick-action-grid{grid-template-columns:repeat(2,1fr);}
+    .management-grid{grid-template-columns:repeat(2,1fr);}
+    .patient-summary{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:850px){
+    .sidebar{width:70px;}
+    .sidebar-brand{justify-content:center;padding:15px;}
+    .sidebar-brand > div:last-child{display:none;}
+    .nav-item{justify-content:center;padding:0;font-size:0;}
+    .nav-item span{font-size:18px;}
+    .sidebar-bottom{padding:15px 10px;}
+    .logout-btn{font-size:0;}
+    .logout-btn::after{content:"↪";font-size:18px;}
+    .main-content{margin-left:70px;padding:0 25px 40px;}
+    .search-box{width:220px;}
+    .audit-row{grid-template-columns:120px 1fr 90px;}
+    .audit-row .audit-type{display:none;}
+}
+
+@media(max-width:600px){
+    .sidebar-toggle{display:block;}
+    .sidebar{
+        width:245px;
+        transform:translateX(-100%);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .sidebar-brand{justify-content:flex-start;padding:18px 20px;}
+    .sidebar-brand > div:last-child{display:block;}
+    .nav-item{justify-content:flex-start;padding:0 15px;font-size:13px;}
+    .main-content{
+        margin-left:0;
+        padding:0 15px 85px;
+    }
+    .topbar{
+        height:75px;
+        margin-bottom:20px;
+        padding-left:55px;
+    }
+    .topbar h1{font-size:21px;}
+    .admin-profile{display:none;}
+    .welcome-box{flex-direction:column;align-items:flex-start;padding:22px;}
+    .welcome-box .primary-btn{width:100%;}
+    .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
+    .stat-card{padding:14px;min-height:90px;gap:10px;}
+    .stat-icon{width:35px;height:35px;font-size:15px;}
+    .quick-action-grid{grid-template-columns:1fr;gap:12px;}
+    .management-grid{grid-template-columns:1fr;}
+    .patient-summary{grid-template-columns:1fr;}
+    .card-header,.action-bar{align-items:flex-start;flex-direction:column;}
+    .search-box{width:100%;}
+    .filter-row{width:100%;}
+    .filter-select{flex:1;min-width:130px;}
+    .form-grid{grid-template-columns:1fr;}
+    .form-group.full{grid-column:auto;}
+    .modal{padding:23px;border-radius:13px;}
+    .form-actions{flex-direction:column-reverse;}
+    .form-actions button{width:100%;}
+    .audit-row{grid-template-columns:1fr;gap:5px;}
+}
+
+@media(max-width:400px){
+    .stats-grid{grid-template-columns:1fr;}
+    .welcome-box h2{font-size:22px;}
+}
+</style>
+</head>
+
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Open menu">☰</button>
+
+<div class="dashboard-layout">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-mark">JS</div>
+            <div>
+                <h2>JeevanSetu</h2>
+                <span>Admin Management Portal</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="dashboardSection">
+                <span>⌂</span> Dashboard
+            </button>
+
+            <button class="nav-item" data-section="staffSection">
+                <span>♙</span> Staff Management
+            </button>
+
+            <button class="nav-item" data-section="patientsSection">
+                <span>♙</span> Patient Records
+            </button>
+
+            <button class="nav-item" data-section="operationsSection">
+                <span>▣</span> Operations
+            </button>
+
+            <button class="nav-item" data-section="auditSection">
+                <span>◌</span> Audit & Logs
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="logout-btn" id="logoutBtn" type="button">Logout</button>
+        </div>
+    </aside>
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <span class="topbar-label">ADMIN PORTAL</span>
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-avatar">AD</div>
+                <div class="profile-info">
+                    <strong id="adminName">Hospital Admin</strong>
+                    <span id="adminHospital">JeevanSetu Institution</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+        <section class="dashboard-section active-section" id="dashboardSection">
+
+            <div class="welcome-box">
+                <div>
+                    <span class="welcome-small">ADMINISTRATION</span>
+                    <h2>Hospital Operations Dashboard</h2>
+                    <p>Manage Doctors, Receptionists, patient records and institutional operations.</p>
+                </div>
+                <button class="primary-btn" type="button" onclick="openModal('staffModal')">
+                    + Add Staff
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">♙</div>
+                    <div>
+                        <span>Total Patients</span>
+                        <strong id="statPatients">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✚</div>
+                    <div>
+                        <span>Doctors</span>
+                        <strong id="statDoctors">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">▣</div>
+                    <div>
+                        <span>Receptionists</span>
+                        <strong id="statReceptionists">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <div>
+                        <span>Today's Consultations</span>
+                        <strong id="statConsultations">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <div class="section-heading">
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Frequently used administrative functions.</p>
+                    </div>
+                </div>
+
+                <div class="quick-action-grid">
+                    <button class="quick-action-card" onclick="showSection('staffSection');openModal('staffModal')">
+                        <div class="quick-action-icon">+</div>
+                        <div>
+                            <h3>Add Staff</h3>
+                            <p>Add a Doctor or Receptionist.</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-card" onclick="showSection('staffSection')">
+                        <div class="quick-action-icon">♙</div>
+                        <div>
+                            <h3>Manage Staff</h3>
+                            <p>View and manage registered staff.</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-card" onclick="showSection('patientsSection')">
+                        <div class="quick-action-icon">⌕</div>
+                        <div>
+                            <h3>Find Patient</h3>
+                            <p>Search by patient name or ID.</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-card" onclick="showSection('auditSection')">
+                        <div class="quick-action-icon">◌</div>
+                        <div>
+                            <h3>Audit Logs</h3>
+                            <p>Review administrative activity.</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <div>
+                        <h3>Recent Staff Activity</h3>
+                        <p>Latest changes made to staff accounts.</p>
+                    </div>
+                    <button class="text-btn" type="button" onclick="showSection('auditSection')">View All</button>
+                </div>
+                <div id="recentActivity"></div>
+            </div>
+
+        </section>
+
+        <!-- =================================================
+             STAFF MANAGEMENT
+        ================================================== -->
+        <section class="dashboard-section" id="staffSection">
+
+            <div class="page-intro">
+                <h2>Staff Management</h2>
+                <p>Admin can add and manage Doctors and Receptionists. Admin accounts cannot be created or promoted here.</p>
+            </div>
+
+            <div class="notice">
+                <strong>Permission boundary:</strong>
+                This dashboard does not provide controls to create, promote, suspend, delete or modify Admins or Super Admins.
+            </div>
+
+            <div class="action-bar">
+                <div class="filter-row">
+                    <select class="filter-select" id="staffRoleFilter">
+                        <option value="all">All Staff</option>
+                        <option value="doctor">Doctors</option>
+                        <option value="receptionist">Receptionists</option>
+                    </select>
+                    <input class="search-box" id="staffSearch" type="text" placeholder="Search name, ID, email or role">
+                </div>
+                <button class="primary-btn" onclick="openModal('staffModal')">+ Add Staff</button>
+            </div>
+
+            <div class="content-card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================================================
+             PATIENT RECORDS
+        ================================================== -->
+        <section class="dashboard-section" id="patientsSection">
+
+            <div class="page-intro">
+                <h2>Patient Records</h2>
+                <p>Search patient records by patient ID or name and inspect available administrative information.</p>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <div>
+                        <h3>Search Patients</h3>
+                        <p>Patients not registered by self-registration must be added by authorized reception staff.</p>
+                    </div>
+                    <input class="search-box" id="patientSearch" type="text" placeholder="Search by name or patient ID">
+                </div>
+                <div id="patientResults"></div>
+            </div>
+
+            <div class="content-card" id="patientDetailsCard" style="display:none;">
+                <div class="card-header">
+                    <div>
+                        <h3 id="patientDetailsName">Patient</h3>
+                        <p id="patientDetailsId"></p>
+                    </div>
+                    <button class="secondary-btn" onclick="closePatientDetails()">Close</button>
+                </div>
+                <div class="patient-summary" id="patientSummary"></div>
+                <div id="patientHistory"></div>
+            </div>
+
+        </section>
+
+        <!-- =================================================
+             OPERATIONS
+        ================================================== -->
+        <section class="dashboard-section" id="operationsSection">
+
+            <div class="page-intro">
+                <h2>Institution Operations</h2>
+                <p>Administrative overview of appointments, staffing and system operations.</p>
+            </div>
+
+            <div class="management-grid">
+                <div class="management-card">
+                    <h3>Today's Appointments</h3>
+                    <p>View the current day's booked consultations and their status.</p>
+                    <button class="secondary-btn" onclick="renderAppointments()">View Schedule</button>
+                </div>
+
+                <div class="management-card">
+                    <h3>Staff Overview</h3>
+                    <p>Monitor active Doctors and Receptionists registered by this Admin.</p>
+                    <button class="secondary-btn" onclick="showSection('staffSection')">Manage Staff</button>
+                </div>
+
+                <div class="management-card">
+                    <h3>System Records</h3>
+                    <p>Review administrative changes and operational activity through the audit trail.</p>
+                    <button class="secondary-btn" onclick="showSection('auditSection')">Open Audit</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <div>
+                        <h3>Appointment Schedule</h3>
+                        <p>Operational appointment overview.</p>
+                    </div>
+                    <span class="status active">Live Prototype</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================================================
+             AUDIT
+        ================================================== -->
+        <section class="dashboard-section" id="auditSection">
+
+            <div class="page-intro">
+                <h2>Audit & Management Logs</h2>
+                <p>Administrative activity recorded by this prototype.</p>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <div>
+                        <h3>Activity Log</h3>
+                        <p>Staff changes and management actions.</p>
+                    </div>
+                    <button class="danger-btn" onclick="clearAuditLogs()">Clear Logs</button>
+                </div>
+                <div id="auditList"></div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- =========================================================
+     ADD STAFF MODAL
+========================================================= -->
+<div class="modal-overlay" id="staffModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h2>Add Staff</h2>
+                <p>Create a Doctor or Receptionist account.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal('staffModal')">&times;</button>
+        </div>
+
+        <div class="notice">
+            Only <strong>Doctor</strong> and <strong>Receptionist</strong> accounts can be created by an Admin.
+            Admin and Super Admin accounts are intentionally unavailable.
+        </div>
+
+        <form id="staffForm">
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="staffName">Full Name</label>
+                    <input class="form-control" id="staffName" required placeholder="Enter full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="staffRole">Role</label>
+                    <select class="form-control" id="staffRole" required>
+                        <option value="">Select Role</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="receptionist">Receptionist</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="staffEmail">Email Address</label>
+                    <input class="form-control" id="staffEmail" type="email" required placeholder="example@hospital.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="staffPhone">Phone Number</label>
+                    <input class="form-control" id="staffPhone" type="tel" required placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="staffJoiningDate">Date of Joining</label>
+                    <input class="form-control" id="staffJoiningDate" type="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="staffDepartment">Department</label>
+                    <input class="form-control" id="staffDepartment" placeholder="e.g. Cardiology">
+                </div>
+
+                <div class="form-group full">
+                    <label for="staffAddress">Address</label>
+                    <textarea class="form-control" id="staffAddress" placeholder="Enter address"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="secondary-btn" onclick="closeModal('staffModal')">Cancel</button>
+                <button type="submit" class="primary-btn">Add Staff</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- =========================================================
+     EDIT STAFF MODAL
+========================================================= -->
+<div class="modal-overlay" id="editStaffModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h2>Edit Staff</h2>
+                <p>Update operational staff information.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal('editStaffModal')">&times;</button>
+        </div>
+
+        <form id="editStaffForm">
+            <input type="hidden" id="editStaffId">
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="editStaffName">Full Name</label>
+                    <input class="form-control" id="editStaffName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStaffRole">Role</label>
+                    <select class="form-control" id="editStaffRole" disabled>
+                        <option value="doctor">Doctor</option>
+                        <option value="receptionist">Receptionist</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStaffEmail">Email</label>
+                    <input class="form-control" id="editStaffEmail" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStaffPhone">Phone</label>
+                    <input class="form-control" id="editStaffPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStaffDepartment">Department</label>
+                    <input class="form-control" id="editStaffDepartment">
+                </div>
+
+                <div class="form-group">
+                    <label for="editStaffStatus">Status</label>
+                    <select class="form-control" id="editStaffStatus">
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="secondary-btn" onclick="closeModal('editStaffModal')">Cancel</button>
+                <button type="submit" class="primary-btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   STORAGE
+========================================================= */
+const STORAGE = {
+    staff: "jeevansetu_admin_staff",
+    patients: "jeevansetu_patients",
+    appointments: "jeevansetu_appointments",
+    audits: "jeevansetu_admin_audits"
+};
+
+const defaultStaff = [
+    {
+        id:"DOC-1001",
+        name:"Dr. Ananya Sen",
+        email:"ananya.sen@hospital.com",
+        phone:"9876543210",
+        role:"doctor",
+        joiningDate:"2026-01-15",
+        department:"Cardiology",
+        status:"active"
+    },
+    {
+        id:"DOC-1002",
+        name:"Dr. Arjun Roy",
+        email:"arjun.roy@hospital.com",
+        phone:"9876543211",
+        role:"doctor",
+        joiningDate:"2026-02-03",
+        department:"General Medicine",
+        status:"active"
+    },
+    {
+        id:"REC-2001",
+        name:"Priya Das",
+        email:"priya.das@hospital.com",
+        phone:"9876543212",
+        role:"receptionist",
+        joiningDate:"2026-01-25",
+        department:"Front Desk",
+        status:"active"
+    }
+];
+
+const defaultPatients = [
+    {
+        id:"PAT-2026-001",
+        name:"Rahul Sharma",
+        dob:"1995-06-12",
+        age:31,
+        sex:"Male",
+        phone:"9000000001",
+        email:"rahul@example.com",
+        address:"Kolkata, West Bengal",
+        registeredBy:"Receptionist",
+        history:[
+            {date:"2026-08-28",doctor:"Dr. Ananya Sen",title:"Cardiology Consultation",details:"Routine cardiac evaluation. Follow-up advised."},
+            {date:"2026-07-12",doctor:"Dr. Arjun Roy",title:"General Consultation",details:"Patient reported mild fatigue. Basic investigations advised."}
+        ]
+    },
+    {
+        id:"PAT-2026-002",
+        name:"Sneha Mukherjee",
+        dob:"2001-02-20",
+        age:25,
+        sex:"Female",
+        phone:"9000000002",
+        email:"sneha@example.com",
+        address:"Howrah, West Bengal",
+        registeredBy:"Self Registration",
+        history:[
+            {date:"2026-09-04",doctor:"Dr. Arjun Roy",title:"General Consultation",details:"Follow-up consultation completed."}
+        ]
+    },
+    {
+        id:"PAT-2026-003",
+        name:"Amit Ghosh",
+        dob:"1988-10-03",
+        age:37,
+        sex:"Male",
+        phone:"9000000003",
+        email:"amit@example.com",
+        address:"Hooghly, West Bengal",
+        registeredBy:"Receptionist",
+        history:[]
+    }
+];
+
+const today = new Date().toISOString().split("T")[0];
+
+const defaultAppointments = [
+    {time:"09:30 AM",patientId:"PAT-2026-001",doctor:"Dr. Ananya Sen",type:"Follow-up",status:"confirmed",date:today},
+    {time:"11:00 AM",patientId:"PAT-2026-002",doctor:"Dr. Arjun Roy",type:"General",status:"pending",date:today},
+    {time:"02:30 PM",patientId:"PAT-2026-003",doctor:"Dr. Ananya Sen",type:"Review",status:"confirmed",date:today}
+];
+
+function getData(key, fallback){
+    const raw = localStorage.getItem(key);
+    if(!raw){
+        localStorage.setItem(key, JSON.stringify(fallback));
+        return fallback;
+    }
+    try{return JSON.parse(raw);}
+    catch{
+        localStorage.setItem(key, JSON.stringify(fallback));
+        return fallback;
+    }
+}
+
+function setData(key,data){
+    localStorage.setItem(key,JSON.stringify(data));
+}
+
+function getStaff(){return getData(STORAGE.staff,defaultStaff);}
+function getPatients(){return getData(STORAGE.patients,defaultPatients);}
+function getAppointments(){return getData(STORAGE.appointments,defaultAppointments);}
+function getAudits(){return getData(STORAGE.audits,[]);}
+
+function addAudit(action,type="MANAGEMENT"){
+    const audits = getAudits();
+    audits.unshift({
+        time:new Date().toLocaleString(),
+        action,
+        type,
+        user:"Hospital Admin"
+    });
+    setData(STORAGE.audits,audits.slice(0,100));
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+const titles = {
+    dashboardSection:"Dashboard",
+    staffSection:"Staff Management",
+    patientsSection:"Patient Records",
+    operationsSection:"Operations",
+    auditSection:"Audit & Logs"
+};
+
+function showSection(sectionId){
+    document.querySelectorAll(".dashboard-section").forEach(section=>{
+        section.classList.remove("active-section");
+    });
+
+    document.getElementById(sectionId).classList.add("active-section");
+
+    document.querySelectorAll(".nav-item").forEach(btn=>{
+        btn.classList.toggle("active",btn.dataset.section===sectionId);
+    });
+
+    document.getElementById("pageTitle").textContent = titles[sectionId] || "Dashboard";
+
+    if(sectionId==="dashboardSection") renderDashboard();
+    if(sectionId==="staffSection") renderStaff();
+    if(sectionId==="patientsSection") renderPatients();
+    if(sectionId==="operationsSection") renderAppointments();
+    if(sectionId==="auditSection") renderAudits();
+
+    document.getElementById("sidebar").classList.remove("open");
+}
+
+document.querySelectorAll(".nav-item").forEach(btn=>{
+    btn.addEventListener("click",()=>showSection(btn.dataset.section));
+});
+
+document.getElementById("sidebarToggle").addEventListener("click",()=>{
+    document.getElementById("sidebar").classList.toggle("open");
+});
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+function renderDashboard(){
+    const staff = getStaff();
+    const patients = getPatients();
+    const appointments = getAppointments();
+
+    document.getElementById("statPatients").textContent = patients.length;
+    document.getElementById("statDoctors").textContent = staff.filter(s=>s.role==="doctor").length;
+    document.getElementById("statReceptionists").textContent = staff.filter(s=>s.role==="receptionist").length;
+    document.getElementById("statConsultations").textContent =
+        appointments.filter(a=>a.date===today).length;
+
+    const audits = getAudits().slice(0,5);
+    const box = document.getElementById("recentActivity");
+
+    if(!audits.length){
+        box.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">◌</div>
+                <h3>No activity yet</h3>
+                <p>Administrative actions will appear here.</p>
+            </div>`;
+        return;
+    }
+
+    box.innerHTML = audits.map(a=>`
+        <div class="patient-search-result">
+            <div>
+                <strong>${escapeHTML(a.action)}</strong>
+                <span>${escapeHTML(a.user)} · ${escapeHTML(a.time)}</span>
+            </div>
+            <span class="status active">${escapeHTML(a.type)}</span>
+        </div>
+    `).join("");
+}
+
+/* =========================================================
+   STAFF MANAGEMENT
+========================================================= */
+function renderStaff(){
+    const query = document.getElementById("staffSearch").value.trim().toLowerCase();
+    const role = document.getElementById("staffRoleFilter").value;
+    const staff = getStaff();
+
+    const filtered = staff.filter(s=>{
+        const matchesQuery =
+            !query ||
+            s.id.toLowerCase().includes(query) ||
+            s.name.toLowerCase().includes(query) ||
+            s.email.toLowerCase().includes(query) ||
+            s.role.toLowerCase().includes(query);
+
+        const matchesRole = role==="all" || s.role===role;
+        return matchesQuery && matchesRole;
+    });
+
+    const body = document.getElementById("staffTableBody");
+
+    if(!filtered.length){
+        body.innerHTML = `<tr><td colspan="8"><div class="empty-state"><h3>No staff found</h3><p>Try another search or filter.</p></div></td></tr>`;
+        return;
+    }
+
+    body.innerHTML = filtered.map(s=>`
+        <tr>
+            <td><strong>${escapeHTML(s.id)}</strong></td>
+            <td>${escapeHTML(s.name)}</td>
+            <td>${escapeHTML(s.email)}</td>
+            <td>${escapeHTML(s.phone)}</td>
+            <td style="text-transform:capitalize">${escapeHTML(s.role)}</td>
+            <td>${formatDate(s.joiningDate)}</td>
+            <td><span class="status ${s.status}">${capitalize(s.status)}</span></td>
+            <td>
+                <div class="staff-actions">
+                    <button class="mini-btn" onclick="editStaff('${s.id}')">Edit</button>
+                    <button class="mini-btn" onclick="resetPassword('${s.id}')">Reset</button>
+                    <button class="mini-btn danger" onclick="removeStaff('${s.id}')">Remove</button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+document.getElementById("staffSearch").addEventListener("input",renderStaff);
+document.getElementById("staffRoleFilter").addEventListener("change",renderStaff);
+
+document.getElementById("staffForm").addEventListener("submit",function(e){
+    e.preventDefault();
+
+    const role = document.getElementById("staffRole").value;
+
+    if(!["doctor","receptionist"].includes(role)){
+        showToast("Only Doctor and Receptionist accounts can be created.","error");
+        return;
+    }
+
+    const staff = getStaff();
+
+    const prefix = role==="doctor" ? "DOC-" : "REC-";
+    const nextNumber = 1000 + staff.filter(s=>s.role===role).length + 1;
+
+    const employee = {
+        id:prefix + nextNumber,
+        name:document.getElementById("staffName").value.trim(),
+        email:document.getElementById("staffEmail").value.trim(),
+        phone:document.getElementById("staffPhone").value.trim(),
+        role,
+        joiningDate:document.getElementById("staffJoiningDate").value,
+        department:document.getElementById("staffDepartment").value.trim() || "General",
+        address:document.getElementById("staffAddress").value.trim(),
+        status:"active"
+    };
+
+    if(staff.some(s=>s.email.toLowerCase()===employee.email.toLowerCase())){
+        showToast("A staff account with this email already exists.","error");
+        return;
+    }
+
+    staff.push(employee);
+    setData(STORAGE.staff,staff);
+
+    addAudit(`Added ${capitalize(role)}: ${employee.name}`,"STAFF ADD");
+
+    this.reset();
+    closeModal("staffModal");
+    renderStaff();
+    renderDashboard();
+    showToast(`${capitalize(role)} added successfully.`,"success");
+});
+
+function editStaff(id){
+    const staff = getStaff();
+    const person = staff.find(s=>s.id===id);
+
+    if(!person) return;
+
+    document.getElementById("editStaffId").value = person.id;
+    document.getElementById("editStaffName").value = person.name;
+    document.getElementById("editStaffRole").value = person.role;
+    document.getElementById("editStaffEmail").value = person.email;
+    document.getElementById("editStaffPhone").value = person.phone;
+    document.getElementById("editStaffDepartment").value = person.department || "";
+    document.getElementById("editStaffStatus").value = person.status;
+
+    openModal("editStaffModal");
+}
+
+document.getElementById("editStaffForm").addEventListener("submit",function(e){
+    e.preventDefault();
+
+    const id = document.getElementById("editStaffId").value;
+    const staff = getStaff();
+    const person = staff.find(s=>s.id===id);
+
+    if(!person) return;
+
+    person.name = document.getElementById("editStaffName").value.trim();
+    person.email = document.getElementById("editStaffEmail").value.trim();
+    person.phone = document.getElementById("editStaffPhone").value.trim();
+    person.department = document.getElementById("editStaffDepartment").value.trim();
+    person.status = document.getElementById("editStaffStatus").value;
+
+    setData(STORAGE.staff,staff);
+    addAudit(`Updated staff record: ${person.name}`,"STAFF UPDATE");
+
+    closeModal("editStaffModal");
+    renderStaff();
+    renderDashboard();
+    showToast("Staff information updated.","success");
+});
+
+function resetPassword(id){
+    const staff = getStaff();
+    const person = staff.find(s=>s.id===id);
+    if(!person) return;
+
+    if(!confirm(`Reset password for ${person.name}?`)) return;
+
+    addAudit(`Password reset requested for ${person.name}`,"SECURITY");
+    showToast("Password reset action recorded in the audit log.","success");
+}
+
+function removeStaff(id){
+    const staff = getStaff();
+    const person = staff.find(s=>s.id===id);
+
+    if(!person) return;
+
+    if(!confirm(`Remove ${person.name} from staff records?`)) return;
+
+    setData(STORAGE.staff,staff.filter(s=>s.id!==id));
+    addAudit(`Removed ${person.role}: ${person.name}`,"STAFF REMOVE");
+
+    renderStaff();
+    renderDashboard();
+    showToast("Staff account removed.","success");
+}
+
+/* =========================================================
+   PATIENT SEARCH
+========================================================= */
+function renderPatients(){
+    const query = document.getElementById("patientSearch").value.trim().toLowerCase();
+    const patients = getPatients();
+
+    const filtered = query
+        ? patients.filter(p=>
+            p.id.toLowerCase().includes(query) ||
+            p.name.toLowerCase().includes(query)
+          )
+        : patients;
+
+    const box = document.getElementById("patientResults");
+
+    if(!filtered.length){
+        box.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⌕</div>
+                <h3>Patient not found</h3>
+                <p>If this patient has no record, an authorized receptionist must register the patient.</p>
+            </div>`;
+        return;
+    }
+
+    box.innerHTML = filtered.map(p=>`
+        <div class="patient-search-result">
+            <div>
+                <strong>${escapeHTML(p.name)}</strong>
+                <span>Patient ID: ${escapeHTML(p.id)} · ${escapeHTML(p.sex)} · Age ${escapeHTML(String(p.age))}</span>
+            </div>
+            <button class="mini-btn" onclick="viewPatient('${p.id}')">View Record</button>
+        </div>
+    `).join("");
+}
+
+document.getElementById("patientSearch").addEventListener("input",renderPatients);
+
+function viewPatient(id){
+    const patient = getPatients().find(p=>p.id===id);
+    if(!patient) return;
+
+    document.getElementById("patientDetailsCard").style.display="block";
+    document.getElementById("patientDetailsName").textContent=patient.name;
+    document.getElementById("patientDetailsId").textContent=`Patient ID: ${patient.id}`;
+
+    document.getElementById("patientSummary").innerHTML=`
+        <div class="summary-item"><span>Date of Birth</span><strong>${formatDate(patient.dob)}</strong></div>
+        <div class="summary-item"><span>Age</span><strong>${escapeHTML(String(patient.age))}</strong></div>
+        <div class="summary-item"><span>Sex</span><strong>${escapeHTML(patient.sex)}</strong></div>
+        <div class="summary-item"><span>Phone</span><strong>${escapeHTML(patient.phone)}</strong></div>
+        <div class="summary-item"><span>Email</span><strong>${escapeHTML(patient.email)}</strong></div>
+        <div class="summary-item"><span>Registration</span><strong>${escapeHTML(patient.registeredBy)}</strong></div>
+        <div class="summary-item" style="grid-column:1/-1"><span>Address</span><strong>${escapeHTML(patient.address)}</strong></div>
+    `;
+
+    const history = patient.history || [];
+
+    document.getElementById("patientHistory").innerHTML = `
+        <div class="card-header">
+            <div>
+                <h3>Medical / Consultation History</h3>
+                <p>Clinical history available to authorized users.</p>
+            </div>
+        </div>
+        ${
+            history.length
+            ? history.map(h=>`
+                <div class="history-item">
+                    <h4>${escapeHTML(h.title)}</h4>
+                    <p><strong>${escapeHTML(h.doctor)}</strong> · ${formatDate(h.date)}</p>
+                    <p>${escapeHTML(h.details)}</p>
+                </div>
+            `).join("")
+            : `<div class="empty-state"><h3>No consultation history</h3><p>No previous consultation has been recorded.</p></div>`
+        }
+    `;
+
+    document.getElementById("patientDetailsCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function closePatientDetails(){
+    document.getElementById("patientDetailsCard").style.display="none";
+}
+
+/* =========================================================
+   APPOINTMENTS
+========================================================= */
+function renderAppointments(){
+    const patients = getPatients();
+    const appointments = getAppointments().filter(a=>a.date===today);
+    const body = document.getElementById("appointmentTableBody");
+
+    if(!appointments.length){
+        body.innerHTML=`<tr><td colspan="5"><div class="empty-state"><h3>No appointments today</h3><p>There are no booked consultations for today.</p></div></td></tr>`;
+        return;
+    }
+
+    body.innerHTML=appointments.map(a=>{
+        const patient=patients.find(p=>p.id===a.patientId);
+        return `
+            <tr>
+                <td><strong>${escapeHTML(a.time)}</strong></td>
+                <td>${escapeHTML(patient ? patient.name : "Unknown Patient")}<br><small>${escapeHTML(a.patientId)}</small></td>
+                <td>${escapeHTML(a.doctor)}</td>
+                <td>${escapeHTML(a.type)}</td>
+                <td><span class="status ${a.status}">${capitalize(a.status)}</span></td>
+            </tr>
+        `;
+    }).join("");
+}
+
+/* =========================================================
+   AUDIT LOGS
+========================================================= */
+function renderAudits(){
+    const audits=getAudits();
+    const box=document.getElementById("auditList");
+
+    if(!audits.length){
+        box.innerHTML=`<div class="empty-state"><div class="empty-icon">◌</div><h3>No audit entries</h3><p>Administrative activity will be recorded here.</p></div>`;
+        return;
+    }
+
+    box.innerHTML=audits.map(a=>`
+        <div class="audit-row">
+            <div class="audit-time">${escapeHTML(a.time)}</div>
+            <div class="audit-action">${escapeHTML(a.action)}</div>
+            <div class="audit-user">${escapeHTML(a.user)}</div>
+            <div class="audit-type">${escapeHTML(a.type)}</div>
+        </div>
+    `).join("");
+}
+
+function clearAuditLogs(){
+    if(!confirm("Clear all audit logs? This cannot be undone.")) return;
+
+    setData(STORAGE.audits,[]);
+    renderAudits();
+    renderDashboard();
+    showToast("Audit logs cleared.","success");
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+function openModal(id){
+    document.getElementById(id).classList.add("show");
+}
+
+function closeModal(id){
+    document.getElementById(id).classList.remove("show");
+}
+
+document.querySelectorAll(".modal-overlay").forEach(overlay=>{
+    overlay.addEventListener("click",function(e){
+        if(e.target===overlay) overlay.classList.remove("show");
+    });
+});
+
+document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){
+        document.querySelectorAll(".modal-overlay.show").forEach(m=>m.classList.remove("show"));
+    }
+});
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+    if(!confirm("Log out from the Admin Dashboard?")) return;
+
+    sessionStorage.removeItem("currentUser");
+    addAudit("Admin logged out","AUTH");
+    showToast("Logged out successfully.","success");
+
+    window.location.href = "../Login/index.html";
+});
+
+/* =========================================================
+   HELPERS
+========================================================= */
+function capitalize(value){
+    if(!value) return "";
+    return value.charAt(0).toUpperCase()+value.slice(1);
+}
+
+function formatDate(value){
+    if(!value) return "—";
+    const d=new Date(value+"T00:00:00");
+    if(Number.isNaN(d.getTime())) return value;
+    return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+}
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+let toastTimer;
+function showToast(message,type=""){
+    const toast=document.getElementById("toast");
+    toast.textContent=message;
+    toast.className="toast show "+type;
+
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>{
+        toast.classList.remove("show");
+    },2800);
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+(function init(){
+    // Demo session data for this standalone prototype.
+    if(!sessionStorage.getItem("currentUser")){
+        sessionStorage.setItem("currentUser",JSON.stringify({
+            role:"admin",
+            name:"Hospital Admin"
+        }));
+    }
+
+    document.getElementById("staffJoiningDate").value=today;
+
+    renderDashboard();
+    renderStaff();
+    renderPatients();
+    renderAppointments();
+    renderAudits();
+})();
+</script>
+
+</body>
+</html>

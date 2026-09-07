@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arambh Health - Super Admin Dashboard</title>
+
+    <style>
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #f7faff;
+            --white: #ffffff;
+
+            --primary: #398fe0;
+            --primary-dark: #267dce;
+            --primary-light: #e8f4ff;
+
+            --text: #14213d;
+            --heading: #102444;
+            --secondary: #64748b;
+            --muted: #94a3b8;
+
+            --border: #d7e0ea;
+            --light-border: #e6edf5;
+
+            --success: #16834b;
+            --success-bg: #eaf8f0;
+
+            --warning: #a47700;
+            --warning-bg: #fffbea;
+
+            --danger: #dc3545;
+            --danger-bg: #fff0f1;
+
+            --purple: #7257d9;
+            --purple-bg: #f1edff;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            width: 250px;
+
+            background: var(--white);
+            border-right: 1px solid var(--light-border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+        }
+
+
+        /* =========================================================
+           BRAND
+        ========================================================= */
+
+        .brand {
+            height: 90px;
+
+            padding: 18px 20px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 10px;
+
+            background: var(--primary-light);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--primary);
+
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .brand-text h2 {
+            color: var(--heading);
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+
+        .brand-text span {
+            color: var(--secondary);
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           SUPER ADMIN BADGE
+        ========================================================= */
+
+        .admin-badge {
+            margin: 18px 15px 5px;
+
+            padding: 9px 12px;
+
+            border-radius: 8px;
+
+            background: var(--purple-bg);
+            color: var(--purple);
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-align: center;
+
+            border: 1px solid #ded7ff;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        .sidebar-nav {
+            padding: 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 6px;
+
+            overflow-y: auto;
+        }
+
+        .nav-title {
+            color: var(--muted);
+
+            font-size: 9px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin: 12px 10px 5px;
+        }
+
+        .nav-item {
+            width: 100%;
+            min-height: 43px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: var(--secondary);
+
+            font-size: 12px;
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 12px;
+
+            text-align: left;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-item .icon {
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 15px;
+        }
+
+        .nav-item:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .nav-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+
+        /* =========================================================
+           SIDEBAR BOTTOM
+        ========================================================= */
+
+        .sidebar-bottom {
+            margin-top: auto;
+
+            padding: 15px;
+
+            border-top: 1px solid var(--light-border);
+        }
+
+        .logout-btn {
+            width: 100%;
+            height: 42px;
+
+            border-radius: 8px;
+
+            border: 1px solid #f0c9cd;
+
+            background: #fff7f7;
+
+            color: var(--danger);
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger-bg);
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            padding: 0 40px 50px;
+        }
+
+
+        /* =========================================================
+           TOPBAR
+        ========================================================= */
+
+        .topbar {
+            height: 90px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--light-border);
+
+            margin-bottom: 30px;
+        }
+
+        .topbar-label {
+            display: block;
+
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .topbar h1 {
+            color: var(--heading);
+
+            font-size: 27px;
+        }
+
+
+        /* =========================================================
+           ADMIN PROFILE
+        ========================================================= */
+
+        .profile {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .profile-avatar {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            background: var(--purple-bg);
+
+            color: var(--purple);
+
+            border: 1px solid #ded7ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+
+            gap: 3px;
+        }
+
+        .profile-info strong {
+            color: var(--heading);
+
+            font-size: 13px;
+        }
+
+        .profile-info span {
+            color: var(--secondary);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           WELCOME
+        ========================================================= */
+
+        .welcome {
+            background:
+                linear-gradient(
+                    110deg,
+                    #eef7ff,
+                    #ffffff
+                );
+
+            border: 1px solid #dbeaf7;
+
+            border-radius: 14px;
+
+            padding: 25px 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .welcome-label {
+            color: var(--primary);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .welcome h2 {
+            color: var(--heading);
+
+            font-size: 23px;
+
+            margin-bottom: 6px;
+        }
+
+        .welcome p {
+            color: var(--secondary);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 14px;
+
+            border-radius: 8px;
+
+            background: var(--success-bg);
+
+            color: var(--success);
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+        }
+
+
+        /* =========================================================
+           STATISTICS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+
+            border: 1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #c8deef;
+
+            box-shadow:
+                0 8px 25px rgba(20, 50, 90, 0.06);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background: var(--purple-bg);
+            color: var(--purple);
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .stat-card:nth-child(4) .stat-icon {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .stat-card span {
+            display: block;
+
+            color: var(--secondary);
+
+            font-size: 10px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-card strong {
+            color: var(--heading);
+
+            font-size: 21px;
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            color: var(--heading);
+
+            font-size: 19px;
+
+            margin-bottom: 4px;
+        }
+
+        .section-header p {
+            color: var(--secondary);
+
+            font-size: 11px;
+        }
+
+        .view-all {
+            border: none;
+
+            background: transparent;
+
+            color: var(--primary);
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            min-height: 110px;
+
+            padding: 18px;
+
+            background: var(--white);
+
+            border: 1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            text-align: left;
+
+            transition: 0.2s ease;
+        }
+
+        .action-card:hover {
+            border-color: #c5dff3;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px rgba(20, 50, 90, 0.06);
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 9px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            margin-bottom: 12px;
+        }
+
+        .action-card h3 {
+            color: var(--heading);
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .action-card p {
+            color: var(--secondary);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           CONTENT GRID
+        ========================================================= */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.6fr 1fr;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: var(--white);
+
+            border: 1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 18px 20px;
+
+            border-bottom: 1px solid var(--light-border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-header h3 {
+            color: var(--heading);
+
+            font-size: 14px;
+        }
+
+        .panel-header span {
+            color: var(--secondary);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           APPROVAL ROW
+        ========================================================= */
+
+        .approval {
+            padding: 15px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .approval:last-child {
+            border-bottom: none;
+        }
+
+        .approval-user {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 0;
+        }
+
+        .user-avatar {
+            width: 39px;
+            height: 39px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .approval-info h4 {
+            color: var(--heading);
+
+            font-size: 12px;
+
+            margin-bottom: 4px;
+        }
+
+        .approval-info p {
+            color: var(--secondary);
+
+            font-size: 10px;
+        }
+
+        .approval-actions {
+            display: flex;
+
+            gap: 6px;
+        }
+
+        .approve-btn,
+        .reject-btn {
+            height: 32px;
+
+            padding: 0 11px;
+
+            border-radius: 6px;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .approve-btn {
+            border: 1px solid #bce4ce;
+
+            background: var(--success-bg);
+
+            color: var(--success);
+        }
+
+        .reject-btn {
+            border: 1px solid #f1c4c9;
+
+            background: var(--danger-bg);
+
+            color: var(--danger);
+        }
+
+
+        /* =========================================================
+           USER TABLE
+        ========================================================= */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 12px 18px;
+
+            background: #f9fbfd;
+
+            color: var(--secondary);
+
+            font-size: 9px;
+
+            text-align: left;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+        }
+
+        td {
+            padding: 14px 18px;
+
+            border-top: 1px solid var(--light-border);
+
+            color: var(--text);
+
+            font-size: 11px;
+        }
+
+        td strong {
+            color: var(--heading);
+        }
+
+
+        /* =========================================================
+           ROLE BADGES
+        ========================================================= */
+
+        .role {
+            display: inline-block;
+
+            padding: 5px 8px;
+
+            border-radius: 15px;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .role.super {
+            background: var(--purple-bg);
+            color: var(--purple);
+        }
+
+        .role.admin {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .role.doctor {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .role.receptionist {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+
+        /* =========================================================
+           STATUS BADGE
+        ========================================================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 8px;
+
+            border-radius: 15px;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .status.active {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status.pending {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .status.suspended {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+
+        /* =========================================================
+           AUDIT LOG
+        ========================================================= */
+
+        .audit-list {
+            padding: 5px 20px;
+        }
+
+        .audit-item {
+            display: flex;
+
+            gap: 12px;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .audit-item:last-child {
+            border-bottom: none;
+        }
+
+        .audit-icon {
+            width: 30px;
+            height: 30px;
+
+            flex-shrink: 0;
+
+            border-radius: 7px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+        }
+
+        .audit-info h4 {
+            color: var(--heading);
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .audit-info p {
+            color: var(--secondary);
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           SYSTEM SECURITY
+        ========================================================= */
+
+        .security-list {
+            padding: 5px 20px;
+        }
+
+        .security-item {
+            padding: 14px 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-info h4 {
+            color: var(--heading);
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .security-info p {
+            color: var(--secondary);
+
+            font-size: 9px;
+        }
+
+        .security-good {
+            color: var(--success);
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15, 35, 60, 0.45);
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 5000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+
+            max-width: 500px;
+
+            background: var(--white);
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            color: var(--heading);
+
+            font-size: 19px;
+        }
+
+        .close {
+            width: 30px;
+            height: 30px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+
+            color: var(--secondary);
+
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+
+            color: #243b5a;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+
+            height: 42px;
+
+            padding: 0 12px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            outline: none;
+
+            color: var(--text);
+
+            font-size: 12px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(57, 143, 224, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            margin-top: 20px;
+        }
+
+        .cancel {
+            height: 40px;
+
+            padding: 0 16px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: var(--secondary);
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .primary {
+            height: 40px;
+
+            padding: 0 16px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .primary:hover {
+            background: var(--primary-dark);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .main {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .brand {
+                justify-content: center;
+
+                padding: 15px;
+            }
+
+            .brand-text,
+            .admin-badge,
+            .nav-title {
+                display: none;
+            }
+
+            .sidebar-nav {
+                padding: 15px 10px;
+            }
+
+            .nav-item {
+                justify-content: center;
+
+                padding: 0;
+            }
+
+            .nav-item span:not(.icon) {
+                display: none;
+            }
+
+            .nav-item {
+                font-size: 0;
+            }
+
+            .sidebar-bottom {
+                padding: 10px;
+            }
+
+            .logout-btn {
+                font-size: 0;
+            }
+
+            .logout-btn::after {
+                content: "↪";
+
+                font-size: 17px;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main {
+                margin-left: 0;
+
+                padding:
+                    0 15px 30px;
+            }
+
+            .sidebar {
+                top: auto;
+
+                bottom: 0;
+
+                width: 100%;
+
+                height: 65px;
+
+                border-right: none;
+
+                border-top: 1px solid var(--light-border);
+
+                flex-direction: row;
+            }
+
+            .brand,
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .sidebar-nav {
+                width: 100%;
+
+                padding: 5px;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(5, 1fr);
+
+                gap: 3px;
+            }
+
+            .nav-item {
+                height: 52px;
+
+                flex-direction: column;
+
+                justify-content: center;
+
+                gap: 3px;
+
+                font-size: 8px;
+            }
+
+            .nav-item .icon {
+                font-size: 14px;
+            }
+
+            .nav-item span:not(.icon) {
+                display: block;
+
+                font-size: 8px;
+            }
+
+            .topbar {
+                height: 75px;
+
+                margin-bottom: 20px;
+            }
+
+            .topbar h1 {
+                font-size: 21px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .welcome {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .system-status {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .stat-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .approval {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .approval-actions {
+                width: 100%;
+            }
+
+            .approve-btn,
+            .reject-btn {
+                flex: 1;
+            }
+        }
+
+
+        @media (max-width: 400px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h2 {
+                font-size: 20px;
+            }
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AH
+            </div>
+
+            <div class="brand-text">
+                <h2>Arambh Health</h2>
+                <span>Healthcare Management</span>
+            </div>
+
+        </div>
+
+
+        <div class="admin-badge">
+            SUPER ADMIN CONTROL PANEL
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-title">
+                Overview
+            </div>
+
+            <button class="nav-item active" onclick="showSection('dashboard')">
+                <span class="icon">▦</span>
+                <span>Dashboard</span>
+            </button>
+
+
+            <div class="nav-title">
+                Administration
+            </div>
+
+            <button class="nav-item" onclick="showSection('admins')">
+                <span class="icon">♙</span>
+                <span>Admin Management</span>
+            </button>
+
+            <button class="nav-item" onclick="showSection('users')">
+                <span class="icon">♙</span>
+                <span>User Management</span>
+            </button>
+
+            <button class="nav-item" onclick="showSection('approvals')">
+                <span class="icon">✓</span>
+                <span>Admin Approvals</span>
+            </button>
+
+
+            <div class="nav-title">
+                System
+            </div>
+
+            <button class="nav-item" onclick="showSection('audit')">
+                <span class="icon">▤</span>
+                <span>Audit Logs</span>
+            </button>
+
+            <button class="nav-item" onclick="showSection('security')">
+                <span class="icon">◉</span>
+                <span>Security</span>
+            </button>
+
+            <button class="nav-item" onclick="showSection('settings')">
+                <span class="icon">⚙</span>
+                <span>System Settings</span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="topbar-label">
+                    Super Admin Portal
+                </span>
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    SA
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Super Administrator
+                    </strong>
+
+                    <span>
+                        System Owner
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             DASHBOARD
+        ===================================================== -->
+
+        <section id="dashboard" class="page-section">
+
+            <div class="welcome">
+
+                <div>
+
+                    <div class="welcome-label">
+                        SYSTEM CONTROL
+                    </div>
+
+                    <h2>
+                        Welcome, Super Admin
+                    </h2>
+
+                    <p>
+                        Manage administrators, monitor system activity,
+                        approve access requests and control the
+                        JeevanSetu healthcare platform.
+                    </p>
+
+                </div>
+
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    All systems operational
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <span>Total Admins</span>
+                        <strong id="adminCount">12</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        !
+                    </div>
+
+                    <div>
+                        <span>Pending Approvals</span>
+                        <strong id="pendingCount">4</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        U
+                    </div>
+
+                    <div>
+                        <span>Total Users</span>
+                        <strong>1,248</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        +
+                    </div>
+
+                    <div>
+                        <span>Active Staff</span>
+                        <strong>186</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                        <p>
+                            Frequently used administrative operations
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <button
+                        class="action-card"
+                        onclick="openModal('adminModal')"
+                    >
+
+                        <div class="action-icon">
+                            +
+                        </div>
+
+                        <h3>
+                            Create Super Admin
+                        </h3>
+
+                        <p>
+                            Add another system-level administrator
+                        </p>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        onclick="showSection('approvals')"
+                    >
+
+                        <div class="action-icon">
+                            ✓
+                        </div>
+
+                        <h3>
+                            Approve Admin
+                        </h3>
+
+                        <p>
+                            Review pending administrator requests
+                        </p>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        onclick="showSection('users')"
+                    >
+
+                        <div class="action-icon">
+                            U
+                        </div>
+
+                        <h3>
+                            Manage Users
+                        </h3>
+
+                        <p>
+                            View and control system users
+                        </p>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        onclick="showSection('audit')"
+                    >
+
+                        <div class="action-icon">
+                            ▤
+                        </div>
+
+                        <h3>
+                            View Audit Logs
+                        </h3>
+
+                        <p>
+                            Monitor important system activity
+                        </p>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPROVAL + AUDIT -->
+
+            <div class="content-grid">
+
+
+                <!-- APPROVALS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Pending Admin Approvals
+                            </h3>
+
+                            <span>
+                                Requires Super Admin authorization
+                            </span>
+
+                        </div>
+
+                        <button
+                            class="view-all"
+                            onclick="showSection('approvals')"
+                        >
+                            View all
+                        </button>
+
+                    </div>
+
+
+                    <div id="approvalList">
+
+                        <div class="approval">
+
+                            <div class="approval-user">
+
+                                <div class="user-avatar">
+                                    AR
+                                </div>
+
+                                <div class="approval-info">
+
+                                    <h4>
+                                        Arjun Roy
+                                    </h4>
+
+                                    <p>
+                                        EMP-1042 • Hospital Administrator
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="approval-actions">
+
+                                <button
+                                    class="approve-btn"
+                                    onclick="approveUser(this)"
+                                >
+                                    Approve
+                                </button>
+
+                                <button
+                                    class="reject-btn"
+                                    onclick="rejectUser(this)"
+                                >
+                                    Reject
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-user">
+
+                                <div class="user-avatar">
+                                    PS
+                                </div>
+
+                                <div class="approval-info">
+
+                                    <h4>
+                                        Priya Sharma
+                                    </h4>
+
+                                    <p>
+                                        EMP-1088 • Hospital Administrator
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="approval-actions">
+
+                                <button
+                                    class="approve-btn"
+                                    onclick="approveUser(this)"
+                                >
+                                    Approve
+                                </button>
+
+                                <button
+                                    class="reject-btn"
+                                    onclick="rejectUser(this)"
+                                >
+                                    Reject
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-user">
+
+                                <div class="user-avatar">
+                                    SK
+                                </div>
+
+                                <div class="approval-info">
+
+                                    <h4>
+                                        Sayan Kumar
+                                    </h4>
+
+                                    <p>
+                                        EMP-1091 • Hospital Administrator
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="approval-actions">
+
+                                <button
+                                    class="approve-btn"
+                                    onclick="approveUser(this)"
+                                >
+                                    Approve
+                                </button>
+
+                                <button
+                                    class="reject-btn"
+                                    onclick="rejectUser(this)"
+                                >
+                                    Reject
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AUDIT -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Recent Activity
+                            </h3>
+
+                            <span>
+                                Latest system events
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="audit-list">
+
+                        <div class="audit-item">
+
+                            <div class="audit-icon">
+                                A
+                            </div>
+
+                            <div class="audit-info">
+
+                                <h4>
+                                    Admin account approved
+                                </h4>
+
+                                <p>
+                                    8 minutes ago
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="audit-item">
+
+                            <div class="audit-icon">
+                                +
+                            </div>
+
+                            <div class="audit-info">
+
+                                <h4>
+                                    New doctor registered
+                                </h4>
+
+                                <p>
+                                    21 minutes ago
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="audit-item">
+
+                            <div class="audit-icon">
+                                U
+                            </div>
+
+                            <div class="audit-info">
+
+                                <h4>
+                                    Staff permissions updated
+                                </h4>
+
+                                <p>
+                                    42 minutes ago
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="audit-item">
+
+                            <div class="audit-icon">
+                                S
+                            </div>
+
+                            <div class="audit-info">
+
+                                <h4>
+                                    Security settings reviewed
+                                </h4>
+
+                                <p>
+                                    1 hour ago
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- USER OVERVIEW -->
+
+            <div class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            User Overview
+                        </h2>
+
+                        <p>
+                            Current users registered in the system
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="view-all"
+                        onclick="showSection('users')"
+                    >
+                        Manage users
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Employee ID</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Active</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td><strong>Rajib Sengupta</strong></td>
+                                    <td>EMP-1001</td>
+                                    <td>
+                                        <span class="role super">
+                                            Super Admin
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status active">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td>Now</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><strong>Arindam Das</strong></td>
+                                    <td>EMP-1012</td>
+                                    <td>
+                                        <span class="role admin">
+                                            Admin
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status active">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td>5 min ago</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><strong>Dr. Ananya Sen</strong></td>
+                                    <td>DOC-2031</td>
+                                    <td>
+                                        <span class="role doctor">
+                                            Doctor
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status active">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td>12 min ago</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><strong>Riya Paul</strong></td>
+                                    <td>EMP-3018</td>
+                                    <td>
+                                        <span class="role receptionist">
+                                            Receptionist
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status active">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td>18 min ago</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ADMIN MANAGEMENT
+        ===================================================== -->
+
+        <section
+            id="admins"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Admin Management</h2>
+
+                    <p>
+                        Manage administrators under your authority.
+                    </p>
+                </div>
+
+                <button
+                    class="primary"
+                    onclick="openModal('adminModal')"
+                >
+                    + Create Super Admin
+                </button>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee ID</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><strong>Rajib Sengupta</strong></td>
+                                <td>EMP-1001</td>
+                                <td>
+                                    <span class="role super">
+                                        Super Admin
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>Protected</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Arindam Das</strong></td>
+                                <td>EMP-1012</td>
+                                <td>
+                                    <span class="role admin">
+                                        Admin
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="view-all">
+                                        Manage
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             USER MANAGEMENT
+        ===================================================== -->
+
+        <section
+            id="users"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>User Management</h2>
+
+                    <p>
+                        Monitor doctors, receptionists and administrators.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><strong>Arindam Das</strong></td>
+                                <td>EMP-1012</td>
+                                <td>
+                                    <span class="role admin">
+                                        Admin
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>5 min ago</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Dr. Ananya Sen</strong></td>
+                                <td>DOC-2031</td>
+                                <td>
+                                    <span class="role doctor">
+                                        Doctor
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>12 min ago</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Riya Paul</strong></td>
+                                <td>EMP-3018</td>
+                                <td>
+                                    <span class="role receptionist">
+                                        Receptionist
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>18 min ago</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             APPROVALS
+        ===================================================== -->
+
+        <section
+            id="approvals"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Admin Approvals</h2>
+
+                    <p>
+                        Approve or reject administrator access requests.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div id="fullApprovalList">
+
+                    <div class="approval">
+
+                        <div class="approval-user">
+
+                            <div class="user-avatar">
+                                AR
+                            </div>
+
+                            <div class="approval-info">
+
+                                <h4>
+                                    Arjun Roy
+                                </h4>
+
+                                <p>
+                                    EMP-1042 • Hospital Administrator
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="approval-actions">
+
+                            <button
+                                class="approve-btn"
+                                onclick="approveUser(this)"
+                            >
+                                Approve
+                            </button>
+
+                            <button
+                                class="reject-btn"
+                                onclick="rejectUser(this)"
+                            >
+                                Reject
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="approval">
+
+                        <div class="approval-user">
+
+                            <div class="user-avatar">
+                                PS
+                            </div>
+
+                            <div class="approval-info">
+
+                                <h4>
+                                    Priya Sharma
+                                </h4>
+
+                                <p>
+                                    EMP-1088 • Hospital Administrator
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="approval-actions">
+
+                            <button
+                                class="approve-btn"
+                                onclick="approveUser(this)"
+                            >
+                                Approve
+                            </button>
+
+                            <button
+                                class="reject-btn"
+                                onclick="rejectUser(this)"
+                            >
+                                Reject
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             AUDIT
+        ===================================================== -->
+
+        <section
+            id="audit"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Audit Logs</h2>
+
+                    <p>
+                        System-level actions performed by privileged users.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="audit-list">
+
+                    <div class="audit-item">
+
+                        <div class="audit-icon">
+                            A
+                        </div>
+
+                        <div class="audit-info">
+                            <h4>
+                                Admin account approved
+                            </h4>
+
+                            <p>
+                                Super Admin • Today 14:02
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="audit-item">
+
+                        <div class="audit-icon">
+                            U
+                        </div>
+
+                        <div class="audit-info">
+                            <h4>
+                                User permissions changed
+                            </h4>
+
+                            <p>
+                                Super Admin • Today 13:45
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="audit-item">
+
+                        <div class="audit-icon">
+                            S
+                        </div>
+
+                        <div class="audit-info">
+                            <h4>
+                                Security configuration reviewed
+                            </h4>
+
+                            <p>
+                                Super Admin • Today 12:31
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SECURITY
+        ===================================================== -->
+
+        <section
+            id="security"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Security</h2>
+
+                    <p>
+                        Monitor critical security controls.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="security-list">
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                Authentication System
+                            </h4>
+
+                            <p>
+                                Login and session management
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Operational
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                Role Based Access Control
+                            </h4>
+
+                            <p>
+                                Permission enforcement
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Enabled
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                Audit Logging
+                            </h4>
+
+                            <p>
+                                Administrative actions
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Enabled
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                Database Security
+                            </h4>
+
+                            <p>
+                                Protected healthcare records
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Protected
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SETTINGS
+        ===================================================== -->
+
+        <section
+            id="settings"
+            class="page-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <div>
+                    <h2>System Settings</h2>
+
+                    <p>
+                        Platform-wide configuration.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="security-list">
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                System Name
+                            </h4>
+
+                            <p>
+                                JeevanSetu
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                Environment
+                            </h4>
+
+                            <p>
+                                Production
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-item">
+
+                        <div class="security-info">
+
+                            <h4>
+                                User Registration
+                            </h4>
+
+                            <p>
+                                Admin approval required
+                            </p>
+
+                        </div>
+
+                        <span class="security-good">
+                            Enabled
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         CREATE SUPER ADMIN MODAL
+    ========================================================= -->
+
+    <div
+        id="adminModal"
+        class="modal"
+    >
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>
+                    Create Super Admin
+                </h2>
+
+                <button
+                    class="close"
+                    onclick="closeModal('adminModal')"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form onsubmit="createAdmin(event)">
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adminName"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Employee ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="employeeId"
+                        placeholder="EMP-XXXX"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        placeholder="admin@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Access Level
+                    </label>
+
+                    <select required>
+
+                        <option value="">
+                            Select access level
+                        </option>
+
+                        <option value="super-admin">
+                            Super Admin
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel"
+                        onclick="closeModal('adminModal')"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Create Super Admin
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        /* =====================================================
+           SECTION NAVIGATION
+        ===================================================== */
+
+        function showSection(sectionId) {
+
+            const sections =
+                document.querySelectorAll(".page-section");
+
+            sections.forEach(section => {
+                section.style.display = "none";
+            });
+
+            const selected =
+                document.getElementById(sectionId);
+
+            if (selected) {
+                selected.style.display = "block";
+            }
+
+
+            /* Update active navigation */
+
+            const navItems =
+                document.querySelectorAll(".nav-item");
+
+            navItems.forEach(item => {
+                item.classList.remove("active");
+            });
+
+
+            /* Find clicked nav item */
+
+            navItems.forEach(item => {
+
+                const onclick =
+                    item.getAttribute("onclick");
+
+                if (
+                    onclick &&
+                    onclick.includes("'" + sectionId + "'")
+                ) {
+                    item.classList.add("active");
+                }
+
+            });
+
+
+            /* Page title */
+            const titles = {
+
+                dashboard: "Dashboard",
+                admins: "Admin Management",
+                users: "User Management",
+                approvals: "Admin Approvals",
+                audit: "Audit Logs",
+                security: "Security",
+                settings: "System Settings"
+
+            };
+
+            document.getElementById("pageTitle").textContent =
+                titles[sectionId] || "Dashboard";
+
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        function openModal(id) {
+
+            const modal =
+                document.getElementById(id);
+
+            if (modal) {
+                modal.classList.add("show");
+            }
+
+        }
+
+
+        function closeModal(id) {
+
+            const modal =
+                document.getElementById(id);
+
+            if (modal) {
+                modal.classList.remove("show");
+            }
+
+        }
+
+
+        /* =====================================================
+           CREATE ADMIN
+        ===================================================== */
+
+        function createAdmin(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("adminName").value;
+
+            const employeeId =
+                document.getElementById("employeeId").value;
+
+            if (!name || !employeeId) {
+                return;
+            }
+
+            alert(
+                "Super Admin account created for " +
+                name +
+                " (" +
+                employeeId +
+                ")."
+            );
+
+            event.target.reset();
+
+            closeModal("adminModal");
+
+        }
+
+
+        /* =====================================================
+           APPROVE USER
+        ===================================================== */
+
+        function approveUser(button) {
+
+            const approval =
+                button.closest(".approval");
+
+            if (!approval) {
+                return;
+            }
+
+            approval.style.opacity = "0.5";
+
+            button.disabled = true;
+
+            const rejectButton =
+                approval.querySelector(".reject-btn");
+
+            if (rejectButton) {
+                rejectButton.disabled = true;
+            }
+
+
+            const current =
+                parseInt(
+                    document.getElementById("pendingCount")
+                        .textContent
+                );
+
+            if (current > 0) {
+
+                document.getElementById("pendingCount")
+                    .textContent = current - 1;
+
+            }
+
+
+            setTimeout(() => {
+
+                approval.remove();
+
+            }, 500);
+
+        }
+
+
+        /* =====================================================
+           REJECT USER
+        ===================================================== */
+
+        function rejectUser(button) {
+
+            const approval =
+                button.closest(".approval");
+
+            if (!approval) {
+                return;
+            }
+
+            const current =
+                parseInt(
+                    document.getElementById("pendingCount")
+                        .textContent
+                );
+
+            if (current > 0) {
+
+                document.getElementById("pendingCount")
+                    .textContent = current - 1;
+
+            }
+
+            approval.remove();
+
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        function logout() {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+            if (confirmed) {
+
+                /*
+                    Replace this with your real
+                    authentication logout logic.
+                */
+
+                localStorage.removeItem("currentUser");
+
+                window.location.href =
+                    "../Login/index.html";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CLOSE MODAL WHEN CLICKING OUTSIDE
+        ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target.classList.contains("modal")
+                ) {
+
+                    event.target.classList.remove("show");
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

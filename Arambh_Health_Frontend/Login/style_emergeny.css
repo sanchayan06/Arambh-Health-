@@ -1,0 +1,290 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #eef5ff, #fdf2f8);
+    color: #172554;
+}
+
+.ambulance-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.ambulance-card {
+    width: 100%;
+    max-width: 900px;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 20px 50px rgba(30, 41, 59, 0.15);
+    border: 1px solid #e2e8f0;
+}
+
+.ambulance-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.emergency-label {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 15px;
+    border-radius: 50px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.ambulance-header h1 {
+    font-size: 42px;
+    color: #172554;
+    margin-bottom: 12px;
+}
+
+.ambulance-header p {
+    max-width: 650px;
+    margin: auto;
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.hotline-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 28px;
+    margin-bottom: 15px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #172554, #2563eb);
+    color: white;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+}
+
+.hotline-banner span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.hotline-banner strong {
+    font-size: 32px;
+    letter-spacing: 2px;
+}
+
+.call-now-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(22, 163, 74, 0.2);
+    transition: all 0.25s ease;
+}
+
+.call-now-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(22, 163, 74, 0.3);
+}
+
+.dispatch-section {
+    margin-top: 35px;
+    padding: 30px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff1f2, #fff7ed);
+    border: 1px solid #fecdd3;
+}
+
+.dispatch-section h2,
+.workflow-section h2 {
+    color: #172554;
+    margin-bottom: 12px;
+}
+
+.dispatch-section p {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.ambulance-now-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #dc2626, #f43f5e);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+    transition: all 0.25s ease;
+}
+
+.ambulance-now-btn:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 12px 28px rgba(220, 38, 38, 0.35);
+}
+
+.ambulance-now-btn:active {
+    transform: translateY(0);
+}
+
+.workflow-section {
+    margin-top: 35px;
+}
+
+.workflow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.workflow-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.25s ease;
+}
+
+.workflow-item:hover {
+    transform: translateX(6px);
+    background: #eff6ff;
+    border-color: #93c5fd;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+}
+
+.workflow-number {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.workflow-item h3 {
+    color: #1e3a8a;
+    margin-bottom: 6px;
+    font-size: 17px;
+}
+
+.workflow-item p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.fallback-notice {
+    margin-top: 30px;
+    padding: 22px;
+    border-radius: 15px;
+    background: #ecfdf5;
+    border-left: 5px solid #10b981;
+}
+
+.fallback-notice h3 {
+    color: #047857;
+    margin-bottom: 8px;
+}
+
+.fallback-notice p {
+    color: #475569;
+    line-height: 1.6;
+}
+
+.technical-notice {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #fefce8;
+    border: 1px solid #fde68a;
+}
+
+.technical-notice strong {
+    display: block;
+    color: #a16207;
+    margin-bottom: 7px;
+}
+
+.technical-notice p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .ambulance-page {
+        padding: 20px 12px;
+    }
+
+    .ambulance-card {
+        padding: 25px 20px;
+        border-radius: 18px;
+    }
+
+    .ambulance-header h1 {
+        font-size: 32px;
+    }
+
+    .hotline-banner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .hotline-banner strong {
+        font-size: 28px;
+    }
+
+    .dispatch-section {
+        padding: 22px;
+    }
+
+    .workflow-item {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ambulance-header h1 {
+        font-size: 28px;
+    }
+
+    .ambulance-header p {
+        font-size: 14px;
+    }
+
+    .workflow-item {
+        gap: 12px;
+    }
+
+    .workflow-number {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}

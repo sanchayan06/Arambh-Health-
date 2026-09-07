@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arambh Health - Portal Authentication</title>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+          
+            <!-- ==================== LEFT PANEL (Branding) ==================== -->
+            <div class="card-left">
+                <!-- Placing the logo verbatim -->
+                <img src="../Artifacts/Arambh_Health_logo.png" alt="Arambh Health Logo" class="brand-logo">
+                
+                <div class="auth-header">
+                    <h2>Arambh Health</h2>
+                    <p><b>A Smarter Way To Take Care of Patients</b></p>
+                </div>
+
+                <div class="estd-text">E S T D &nbsp; 2 0 2 6</div>
+            </div>
+
+            <!-- ==================== RIGHT PANEL (Forms) ==================== -->
+            <div class="card-right">
+
+                <!-- Navigation Tabs -->
+                <div class="auth-tabs">
+                    <button type="button" class="tab-btn active" id="tabSignInBtn" onclick="switchTab('signin')">Sign In</button>
+                    <button type="button" class="tab-btn" id="tabSignUpBtn" onclick="switchTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- SIGN IN FORM -->
+                <form id="signInForm">
+                    <h2>Sign in to your account</h2>
+                    <p>Access your Arambh Health account securely.</p>
+                    <div class="form-group">
+                        <label for="siHospital"><br>Select Hospital Name (Avoid this if you are a patient)</label>
+                        <select id="siHospital">
+                            <option value="">-- Choose Hospital --</option>
+                            <option value="AIIMS - New Delhi">AIIMS - New Delhi</option>
+                            <option value="Apollo Hospitals">Apollo Hospitals</option>
+                            <option value="Fortis Healthcare">Fortis Healthcare</option>
+                            <option value="Max Super Speciality Hospital">Max Super Speciality Hospital</option>
+                            <option value="Manipal Hospital">Manipal Hospital</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siFullName">Full Name</label>
+                        <input type="text" id="siFullName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siRole">Login As</label>
+                        <select id="siRole" required>
+                            <option value="">-- Select Role --</option>
+                            <option value="patient">Patient</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="receptionist">Receptionist</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siEmail">Email Address</label>
+                        <input type="email" id="siEmail" placeholder="example@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siPhone">Phone Number</label>
+                        <input type="tel" id="siPhone" placeholder="Enter phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siPassword">Password</label>
+                        <input type="password" id="siPassword" placeholder="Enter password" required>
+                    </div>
+
+                    <!-- Forgot Password Link -->
+                    <div class="form-sub-row">
+                        <a href="javascript:void(0)" class="forgot-link" onclick="handleForgotPassword()">Forgot password?</a>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn btn-full">Sign In</button>
+                    </div>
+                </form>
+
+                <!-- SIGN UP FORM -->
+                <form id="signUpForm" class="hidden">
+                    
+                    <h2>Sign up with us</h2>
+
+                    <!-- Form warning/info block styled like screenshot -->
+                    <div class="info-box">
+                        <strong>THIS SIGN UP SYSTEM IS ONLY FOR PATIENTS</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suFullName">Full Name</label>
+                        <input type="text" id="suFullName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="suDob">Date of Birth (dd-mm-yyyy)</label>
+                            <input type="date" id="suDob" required onchange="calculateAge()">
+                        </div>
+                        <div class="form-group">
+                            <label for="suAge">Age (Auto-calculated)</label>
+                            <input type="number" id="suAge" placeholder="Age" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="suSex">Sex</label>
+                            <select id="suSex" required>
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="suPhone">Phone Number</label>
+                            <input type="tel" id="suPhone" placeholder="Phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suAddress">Address (Street, City, Postal code)</label>
+                        <textarea id="suAddress" rows="2" placeholder="e.g. 123 Health Ave, New Delhi, 110001" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suIllness">Critical Illness or Long-term Disease <span class="optional-tag">(Optional)</span></label>
+                        <textarea id="suIllness" rows="2" placeholder="e.g. Asthma, Diabetes, Heart condition (Leave blank if none)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suEmail">Email Address</label>
+                        <input type="email" id="suEmail" placeholder="example@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suPassword">Password (At least 6 characters)</label>
+                        <input type="password" id="suPassword" placeholder="Minimum 6 characters" minlength="6" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn btn-full">Create Account</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Logic -->
+    <script>
+        // Switch Tabs between Sign In and Sign Up
+        function switchTab(mode) {
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+            const tabSignInBtn = document.getElementById('tabSignInBtn');
+            const tabSignUpBtn = document.getElementById('tabSignUpBtn');
+
+            if (mode === 'signup') {
+                signInForm.classList.add('hidden');
+                signUpForm.classList.remove('hidden');
+                tabSignUpBtn.classList.add('active');
+                tabSignInBtn.classList.remove('active');
+            } else {
+                signUpForm.classList.add('hidden');
+                signInForm.classList.remove('hidden');
+                tabSignInBtn.classList.add('active');
+                tabSignUpBtn.classList.remove('active');
+            }
+        }
+
+        // Automatic Age Calculation from Date of Birth
+        function calculateAge() {
+            const dobValue = document.getElementById('suDob').value;
+            const ageInput = document.getElementById('suAge');
+            
+            if (!dobValue) {
+                ageInput.value = '';
+                return;
+            }
+
+            const dob = new Date(dobValue);
+            const today = new Date();
+
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            
+            // Adjust age if birthday hasn't occurred yet this year
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            if (age < 0) {
+                alert('Birth date cannot be in the future!');
+                document.getElementById('suDob').value = '';
+                ageInput.value = '';
+            } else {
+                ageInput.value = age;
+            }
+        }
+
+        // Forgot Password Action
+        function handleForgotPassword() {
+            const email = prompt('Enter your registered email address to reset your password:');
+            if (email) {
+                alert('Password reset link has been dispatched to: ' + email);
+            }
+        }
+
+        // Sign In submission
+        document.getElementById('signInForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const role = document.getElementById('siRole').value;
+            sessionStorage.setItem('currentUser', JSON.stringify({ role: role }));
+            alert('Signed in successfully as ' + role.toLowerCase());
+            window.location.href = 'dashboard.html';
+        });
+
+        // Sign Up submission
+        document.getElementById('signUpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Registration complete! You can now log in.');
+            switchTab('signin');
+        });
+    </script>
+</body>
+</html>

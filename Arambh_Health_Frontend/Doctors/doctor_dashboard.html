@@ -1,0 +1,4069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JeevanSetu - Doctor Dashboard</title>
+
+    <style>
+        /* ========================================
+           RESET
+        ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* ========================================
+           VARIABLES
+        ======================================== */
+
+        :root {
+            --background: #f7faff;
+            --white: #ffffff;
+
+            --primary: #398fe0;
+            --primary-dark: #267dce;
+            --primary-light: #e8f4ff;
+
+            --text: #14213d;
+            --heading: #102444;
+
+            --secondary: #64748b;
+            --muted: #94a3b8;
+
+            --border: #d7e0ea;
+            --light-border: #e6edf5;
+
+            --success: #16834b;
+            --success-bg: #eaf8f0;
+
+            --warning: #a47700;
+            --warning-bg: #fffbea;
+
+            --danger: #dc3545;
+            --danger-bg: #fff0f1;
+
+            --shadow:
+                0 8px 25px rgba(20, 50, 90, 0.06);
+        }
+
+
+        /* ========================================
+           BODY
+        ======================================== */
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            min-height: 100vh;
+        }
+
+
+        /* ========================================
+           SIDEBAR
+        ======================================== */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 245px;
+
+            background: var(--white);
+
+            border-right:
+                1px solid var(--light-border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+        }
+
+
+        /* ========================================
+           BRAND
+        ======================================== */
+
+        .sidebar-brand {
+            height: 90px;
+
+            padding:
+                18px 20px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            border-bottom:
+                1px solid var(--light-border);
+        }
+
+        .sidebar-brand img {
+            width: 55px;
+            height: 55px;
+
+            object-fit: contain;
+        }
+
+        .sidebar-brand h2 {
+            color: var(--heading);
+
+            font-size: 17px;
+
+            margin-bottom: 4px;
+        }
+
+        .sidebar-brand span {
+            color: var(--secondary);
+
+            font-size: 10px;
+        }
+
+
+        /* ========================================
+           SIDEBAR NAVIGATION
+        ======================================== */
+
+        .sidebar-nav {
+            padding: 25px 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .nav-item {
+            width: 100%;
+
+            min-height: 45px;
+
+            padding:
+                0 15px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: var(--secondary);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-item span {
+            width: 20px;
+
+            font-size: 17px;
+
+            color: var(--secondary);
+
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary-dark);
+        }
+
+        .nav-item:hover span {
+            color:
+                var(--primary-dark);
+        }
+
+        .nav-item.active {
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+        }
+
+        .nav-item.active span {
+            color:
+                var(--primary);
+        }
+
+        .nav-item:focus {
+            outline: none;
+        }
+
+        .nav-item:focus-visible {
+            outline:
+                2px solid var(--primary);
+
+            outline-offset: 2px;
+        }
+
+
+        /* ========================================
+           SIDEBAR BOTTOM
+        ======================================== */
+
+        .sidebar-bottom {
+            margin-top: auto;
+
+            padding:
+                20px 15px;
+
+            border-top:
+                1px solid var(--light-border);
+        }
+
+        .logout-btn {
+            width: 100%;
+
+            height: 42px;
+
+            border:
+                1px solid #f0c9cd;
+
+            border-radius: 8px;
+
+            background:
+                #fff7f7;
+
+            color:
+                var(--danger);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background:
+                var(--danger-bg);
+
+            border-color:
+                #efb5bb;
+        }
+
+
+        /* ========================================
+           MAIN CONTENT
+        ======================================== */
+
+        .main-content {
+            margin-left: 245px;
+
+            min-height: 100vh;
+
+            padding:
+                0 40px 50px;
+        }
+
+
+        /* ========================================
+           TOPBAR
+        ======================================== */
+
+        .topbar {
+            height: 90px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border-bottom:
+                1px solid var(--light-border);
+
+            margin-bottom: 30px;
+        }
+
+        .topbar-label {
+            display: block;
+
+            color:
+                var(--secondary);
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .topbar h1 {
+            font-size: 26px;
+
+            color:
+                var(--heading);
+        }
+
+
+        /* ========================================
+           DOCTOR PROFILE
+        ======================================== */
+
+        .doctor-profile {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .profile-avatar {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            border:
+                1px solid #cfe6fa;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+
+            font-weight: 700;
+        }
+
+        .profile-info {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+        }
+
+        .profile-info strong {
+            color:
+                var(--heading);
+
+            font-size: 13px;
+        }
+
+        .profile-info span {
+            color:
+                var(--secondary);
+
+            font-size: 11px;
+        }
+
+
+        /* ========================================
+           SECTIONS
+        ======================================== */
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active-section {
+            display: block;
+        }
+
+
+        /* ========================================
+           WELCOME BOX
+        ======================================== */
+
+        .welcome-box {
+            padding:
+                28px 30px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #eef7ff,
+                    #ffffff
+                );
+
+            border:
+                1px solid #dbeaf7;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+        }
+
+        .welcome-small {
+            color:
+                var(--primary);
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .welcome-box h2 {
+            color:
+                var(--heading);
+
+            font-size: 25px;
+
+            margin:
+                5px 0 7px;
+        }
+
+        .welcome-box p {
+            color:
+                var(--secondary);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ========================================
+           BUTTONS
+        ======================================== */
+
+        .primary-btn {
+            height: 44px;
+
+            padding:
+                0 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            background:
+                var(--primary-dark);
+        }
+
+        .secondary-btn {
+            height: 42px;
+
+            padding:
+                0 18px;
+
+            border:
+                1px solid #bcd8ed;
+
+            border-radius: 8px;
+
+            background:
+                white;
+
+            color:
+                var(--primary-dark);
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .secondary-btn:hover {
+            background:
+                var(--primary-light);
+        }
+
+        .danger-btn {
+            height: 42px;
+
+            padding:
+                0 18px;
+
+            border:
+                1px solid #f0c9cd;
+
+            border-radius: 8px;
+
+            background:
+                var(--danger-bg);
+
+            color:
+                var(--danger);
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        /* ========================================
+           STATS
+        ======================================== */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            min-height: 105px;
+
+            padding: 20px;
+
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            transition: 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color:
+                #c9e0f2;
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+        .stat-card span {
+            display: block;
+
+            color:
+                var(--secondary);
+
+            font-size: 11px;
+
+            margin-bottom: 6px;
+        }
+
+        .stat-card strong {
+            color:
+                var(--heading);
+
+            font-size: 20px;
+        }
+
+
+        /* ========================================
+           SECTION HEADING
+        ======================================== */
+
+        .section-heading {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            color:
+                var(--heading);
+
+            font-size: 20px;
+
+            margin-bottom: 5px;
+        }
+
+        .section-heading p {
+            color:
+                var(--secondary);
+
+            font-size: 12px;
+        }
+
+
+        /* ========================================
+           SEARCH
+        ======================================== */
+
+        .search-box {
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            height: 44px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(57, 143, 224, 0.1);
+        }
+
+
+        /* ========================================
+           PATIENT CARDS
+        ======================================== */
+
+        .patient-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .patient-card {
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            transition:
+                0.2s ease;
+        }
+
+        .patient-card:hover {
+            border-color:
+                #c3dff3;
+
+            box-shadow:
+                var(--shadow);
+
+            transform:
+                translateY(-2px);
+        }
+
+        .patient-top {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 17px;
+        }
+
+        .patient-avatar {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 700;
+        }
+
+        .patient-name {
+            color:
+                var(--heading);
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .patient-id {
+            color:
+                var(--primary);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .patient-details {
+            border-top:
+                1px solid var(--light-border);
+
+            padding-top: 15px;
+
+            margin-bottom: 17px;
+        }
+
+        .patient-detail {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 8px;
+
+            font-size: 11px;
+        }
+
+        .patient-detail span:first-child {
+            color:
+                var(--secondary);
+        }
+
+        .patient-detail span:last-child {
+            color:
+                var(--text);
+
+            font-weight: 600;
+
+            text-align: right;
+        }
+
+        .patient-actions {
+            display: flex;
+
+            gap: 8px;
+        }
+
+        .patient-actions button {
+            flex: 1;
+        }
+
+
+        /* ========================================
+           CONSULTATION LIST
+        ======================================== */
+
+        .consultation-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .consultation-card {
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .consultation-main {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            min-width: 0;
+        }
+
+        .consultation-avatar {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+        .consultation-info h3 {
+            color:
+                var(--heading);
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .consultation-info p {
+            color:
+                var(--secondary);
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .consultation-date {
+            color:
+                var(--text);
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+        .consultation-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        /* ========================================
+           STATUS
+        ======================================== */
+
+        .status {
+            padding:
+                6px 10px;
+
+            border-radius:
+                20px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .status.booked {
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary-dark);
+        }
+
+        .status.completed {
+            background:
+                var(--success-bg);
+
+            color:
+                var(--success);
+        }
+
+        .status.cancelled {
+            background:
+                var(--danger-bg);
+
+            color:
+                var(--danger);
+        }
+
+
+        /* ========================================
+           MEDICAL HISTORY
+        ======================================== */
+
+        .history-box {
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius:
+                12px;
+
+            padding:
+                22px;
+
+            margin-top:
+                20px;
+        }
+
+        .history-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .history-header h3 {
+            color:
+                var(--heading);
+
+            font-size: 16px;
+        }
+
+        .history-timeline {
+            position: relative;
+
+            padding-left:
+                25px;
+        }
+
+        .history-timeline::before {
+            content: "";
+
+            position: absolute;
+
+            left: 5px;
+
+            top: 0;
+            bottom: 0;
+
+            width: 1px;
+
+            background:
+                var(--border);
+        }
+
+        .history-item {
+            position: relative;
+
+            padding:
+                15px;
+
+            margin-bottom:
+                12px;
+
+            background:
+                #f9fbfd;
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius:
+                9px;
+        }
+
+        .history-item::before {
+            content: "";
+
+            position: absolute;
+
+            left:
+                -25px;
+
+            top:
+                18px;
+
+            width:
+                9px;
+
+            height:
+                9px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--primary);
+
+            border:
+                3px solid var(--primary-light);
+        }
+
+        .history-item .date {
+            color:
+                var(--primary);
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                5px;
+        }
+
+        .history-item h4 {
+            color:
+                var(--heading);
+
+            font-size:
+                13px;
+
+            margin-bottom:
+                5px;
+        }
+
+        .history-item p {
+            color:
+                var(--secondary);
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* ========================================
+           EMPTY STATE
+        ======================================== */
+
+        .empty-state {
+            padding:
+                55px 20px;
+
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--light-border);
+
+            border-radius:
+                12px;
+
+            text-align:
+                center;
+        }
+
+        .empty-icon {
+            width:
+                55px;
+
+            height:
+                55px;
+
+            margin:
+                0 auto 15px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                22px;
+        }
+
+        .empty-state h3 {
+            color:
+                var(--heading);
+
+            font-size:
+                16px;
+
+            margin-bottom:
+                7px;
+        }
+
+        .empty-state p {
+            color:
+                var(--secondary);
+
+            font-size:
+                12px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* ========================================
+           NOTICE
+        ======================================== */
+
+        .info-notice {
+            padding:
+                13px 15px;
+
+            margin-bottom:
+                20px;
+
+            border:
+                1px solid #cfe3f4;
+
+            border-radius:
+                9px;
+
+            background:
+                #f0f8ff;
+
+            color:
+                #315a7c;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* ========================================
+           MODAL
+        ======================================== */
+
+        .modal-overlay {
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                rgba(15, 35, 60, 0.45);
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+
+            z-index:
+                9999;
+        }
+
+        .modal-overlay.show {
+            display:
+                flex;
+        }
+
+        .modal {
+            width:
+                100%;
+
+            max-width:
+                650px;
+
+            max-height:
+                90vh;
+
+            overflow-y:
+                auto;
+
+            background:
+                var(--white);
+
+            border-radius:
+                15px;
+
+            padding:
+                28px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.18);
+        }
+
+        .modal-header {
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                25px;
+        }
+
+        .modal-header span {
+            color:
+                var(--primary);
+
+            font-size:
+                11px;
+
+            font-weight:
+                600;
+        }
+
+        .modal-header h2 {
+            color:
+                var(--heading);
+
+            font-size:
+                21px;
+
+            margin-top:
+                5px;
+        }
+
+        .close-btn {
+            width:
+                32px;
+
+            height:
+                32px;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            background:
+                #f1f5f9;
+
+            color:
+                var(--secondary);
+
+            font-size:
+                20px;
+
+            cursor:
+                pointer;
+        }
+
+        .close-btn:hover {
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+        }
+
+
+        /* ========================================
+           FORM
+        ======================================== */
+
+        .form-group {
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            margin-bottom:
+                17px;
+        }
+
+        .form-row {
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                15px;
+        }
+
+        .form-group label {
+            color:
+                #243b5a;
+
+            font-size:
+                11px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width:
+                100%;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                8px;
+
+            background:
+                white;
+
+            color:
+                var(--text);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size:
+                12px;
+
+            outline:
+                none;
+
+            padding:
+                0 12px;
+        }
+
+        .form-group input,
+        .form-group select {
+            height:
+                43px;
+        }
+
+        .form-group textarea {
+            min-height:
+                90px;
+
+            padding:
+                12px;
+
+            resize:
+                vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(57, 143, 224, 0.1);
+        }
+
+        .modal-actions {
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                10px;
+
+            margin-top:
+                25px;
+        }
+
+
+        /* ========================================
+           RESPONSIVE 1100px
+        ======================================== */
+
+        @media (max-width: 1100px) {
+
+            .main-content {
+                padding-left:
+                    30px;
+
+                padding-right:
+                    30px;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .patient-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        /* ========================================
+           RESPONSIVE 850px
+        ======================================== */
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                width:
+                    70px;
+            }
+
+            .sidebar-brand {
+                justify-content:
+                    center;
+
+                padding:
+                    15px;
+            }
+
+            .sidebar-brand img {
+                width:
+                    42px;
+
+                height:
+                    42px;
+            }
+
+            .sidebar-brand div {
+                display:
+                    none;
+            }
+
+            .nav-item {
+                justify-content:
+                    center;
+
+                padding:
+                    0;
+
+                font-size:
+                    0;
+            }
+
+            .nav-item span {
+                font-size:
+                    18px;
+            }
+
+            .sidebar-bottom {
+                padding:
+                    15px 10px;
+            }
+
+            .logout-btn {
+                font-size:
+                    0;
+            }
+
+            .logout-btn::after {
+                content:
+                    "↪";
+
+                font-size:
+                    18px;
+            }
+
+            .main-content {
+                margin-left:
+                    70px;
+
+                padding:
+                    0 25px 40px;
+            }
+
+            .patient-grid {
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
+
+        /* ========================================
+           RESPONSIVE 600px
+        ======================================== */
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                margin-left:
+                    0;
+
+                padding:
+                    0 15px 80px;
+            }
+
+            .sidebar {
+                position:
+                    fixed;
+
+                top:
+                    auto;
+
+                bottom:
+                    0;
+
+                width:
+                    100%;
+
+                height:
+                    65px;
+
+                border-right:
+                    none;
+
+                border-top:
+                    1px solid var(--light-border);
+
+                flex-direction:
+                    row;
+            }
+
+            .sidebar-brand,
+            .sidebar-bottom {
+                display:
+                    none;
+            }
+
+            .sidebar-nav {
+                width:
+                    100%;
+
+                padding:
+                    5px;
+
+                display:
+                    grid;
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+                gap:
+                    3px;
+            }
+
+            .nav-item {
+                height:
+                    52px;
+
+                flex-direction:
+                    column;
+
+                justify-content:
+                    center;
+
+                gap:
+                    3px;
+
+                font-size:
+                    9px;
+            }
+
+            .nav-item span {
+                width:
+                    auto;
+
+                font-size:
+                    15px;
+            }
+
+            .topbar {
+                height:
+                    75px;
+
+                margin-bottom:
+                    20px;
+            }
+
+            .topbar h1 {
+                font-size:
+                    21px;
+            }
+
+            .doctor-profile {
+                display:
+                    none;
+            }
+
+            .welcome-box {
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                padding:
+                    22px;
+            }
+
+            .welcome-box h2 {
+                font-size:
+                    21px;
+            }
+
+            .welcome-box .primary-btn {
+                width:
+                    100%;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap:
+                    10px;
+            }
+
+            .stat-card {
+                padding:
+                    14px;
+
+                min-height:
+                    90px;
+
+                gap:
+                    10px;
+            }
+
+            .stat-icon {
+                width:
+                    35px;
+
+                height:
+                    35px;
+            }
+
+            .section-heading {
+                align-items:
+                    flex-start;
+
+                gap:
+                    10px;
+            }
+
+            .search-box {
+                flex-direction:
+                    column;
+            }
+
+            .search-box button {
+                width:
+                    100%;
+            }
+
+            .consultation-card {
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+            }
+
+            .consultation-actions {
+                width:
+                    100%;
+
+                flex-wrap:
+                    wrap;
+            }
+
+            .consultation-actions button {
+                flex:
+                    1;
+            }
+
+            .form-row {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .modal {
+                padding:
+                    22px;
+            }
+
+            .modal-actions {
+                flex-direction:
+                    column-reverse;
+            }
+
+            .modal-actions button {
+                width:
+                    100%;
+            }
+        }
+
+
+        /* ========================================
+           RESPONSIVE 400px
+        ======================================== */
+
+        @media (max-width: 400px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .topbar h1 {
+                font-size:
+                    19px;
+            }
+
+            .sidebar-nav {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ========================================
+         SIDEBAR
+    ======================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <!-- Replace with your actual logo -->
+            <img
+                src="logo.png"
+                alt="JeevanSetu Logo"
+            >
+
+            <div>
+                <h2>JeevanSetu</h2>
+                <span>Doctor Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="nav-item active"
+                data-section="dashboard"
+            >
+                <span>▦</span>
+                Dashboard
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="today"
+            >
+                <span>◷</span>
+                Today's Consultation
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="past"
+            >
+                <span>▣</span>
+                My Past Patients
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ========================================
+         MAIN CONTENT
+    ======================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ========================================
+             TOPBAR
+        ======================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="topbar-label">
+                    Doctor Portal
+                </span>
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="doctor-profile">
+
+                <div
+                    class="profile-avatar"
+                    id="doctorAvatar"
+                >
+                    DR
+                </div>
+
+                <div class="profile-info">
+
+                    <strong id="doctorName">
+                        Dr. Sanchayan Das
+                    </strong>
+
+                    <span>
+                        Doctor
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ========================================
+             DASHBOARD SECTION
+        ======================================== -->
+
+        <section
+            id="dashboard"
+            class="dashboard-section active-section"
+        >
+
+            <div class="welcome-box">
+
+                <div>
+
+                    <span class="welcome-small">
+                        Welcome back
+                    </span>
+
+                    <h2 id="welcomeDoctor">
+                        Dr. Sanchayan Das
+                    </h2>
+
+                    <p>
+                        Manage your assigned consultations,
+                        review patient information and maintain
+                        clinical records.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="showSection('today')"
+                >
+                    Today's Consultations
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        #
+                    </div>
+
+                    <div>
+                        <span>
+                            Total Assigned Patients
+                        </span>
+
+                        <strong id="totalPatients">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ◷
+                    </div>
+
+                    <div>
+                        <span>
+                            Today's Consultations
+                        </span>
+
+                        <strong id="todayCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <span>
+                            Completed Consultations
+                        </span>
+
+                        <strong id="completedCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        +
+                    </div>
+
+                    <div>
+                        <span>
+                            Past Patients
+                        </span>
+
+                        <strong id="pastPatientCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PATIENT SEARCH -->
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Find Patient
+                    </h2>
+
+                    <p>
+                        Search using Patient ID or patient name
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="patientSearch"
+                    placeholder="Enter Patient ID or patient name..."
+                >
+
+                <button
+                    class="primary-btn"
+                    id="searchPatientBtn"
+                >
+                    Search Patient
+                </button>
+
+            </div>
+
+
+            <div id="patientSearchResult"></div>
+
+
+        </section>
+
+
+        <!-- ========================================
+             TODAY'S CONSULTATION
+        ======================================== -->
+
+        <section
+            id="today"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Today's Consultation
+                    </h2>
+
+                    <p>
+                        Patients with consultations booked with you today
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-notice">
+                You can access patient information and add clinical
+                records only for consultations assigned to you.
+            </div>
+
+
+            <div
+                class="consultation-list"
+                id="todayConsultations"
+            ></div>
+
+        </section>
+
+
+        <!-- ========================================
+             PAST PATIENTS
+        ======================================== -->
+
+        <section
+            id="past"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        My Past Patients
+                    </h2>
+
+                    <p>
+                        Patients previously consulted by you
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="pastPatientSearch"
+                    placeholder="Search your past patients..."
+                >
+
+                <button
+                    class="primary-btn"
+                    id="searchPastBtn"
+                >
+                    Search
+                </button>
+
+            </div>
+
+
+            <div
+                class="patient-grid"
+                id="pastPatients"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================
+         MEDICAL HISTORY MODAL
+    ======================================== -->
+
+    <div
+        class="modal-overlay"
+        id="historyModal"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        PATIENT MEDICAL HISTORY
+                    </span>
+
+                    <h2 id="historyPatientName">
+                        Patient
+                    </h2>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal('historyModal')"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div id="historyContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         ADD CONSULTATION MODAL
+    ======================================== -->
+
+    <div
+        class="modal-overlay"
+        id="consultationModal"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        CURRENT CONSULTATION
+                    </span>
+
+                    <h2>
+                        Add Consultation
+                    </h2>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal('consultationModal')"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="consultationForm">
+
+                <input
+                    type="hidden"
+                    id="consultationPatientId"
+                >
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Patient ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="formPatientId"
+                            readonly
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Patient Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="formPatientName"
+                            readonly
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Consultation Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="consultationDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Consultation Type
+                        </label>
+
+                        <select
+                            id="consultationType"
+                            required
+                        >
+
+                            <option value="">
+                                Select type
+                            </option>
+
+                            <option value="General Consultation">
+                                General Consultation
+                            </option>
+
+                            <option value="Follow-up">
+                                Follow-up
+                            </option>
+
+                            <option value="Emergency">
+                                Emergency
+                            </option>
+
+                            <option value="Specialist Consultation">
+                                Specialist Consultation
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Chief Complaint
+                    </label>
+
+                    <textarea
+                        id="chiefComplaint"
+                        placeholder="Enter patient's chief complaint..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Clinical Findings
+                    </label>
+
+                    <textarea
+                        id="clinicalFindings"
+                        placeholder="Enter clinical observations and findings..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Diagnosis
+                    </label>
+
+                    <textarea
+                        id="diagnosis"
+                        placeholder="Enter diagnosis..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Treatment / Prescription
+                    </label>
+
+                    <textarea
+                        id="treatment"
+                        placeholder="Enter treatment or prescription..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Doctor's Notes
+                    </label>
+
+                    <textarea
+                        id="doctorNotes"
+                        placeholder="Additional clinical notes..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closeModal('consultationModal')"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Save Consultation
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+
+    <script>
+
+        /* ========================================
+           DEMO DATA
+        ======================================== */
+
+        const currentDoctor = {
+            id: "DOC-2026-001",
+            name: "Dr. Sanchayan Das",
+            specialization: "General Medicine"
+        };
+
+
+        /*
+         * DEMO PATIENT DATA
+         *
+         * In the real application this must come
+         * from the backend/database.
+         */
+
+        let patients = [
+
+            {
+                id: "PAT-2026-001",
+                name: "Rajib Sengupta",
+                age: 21,
+                sex: "Male",
+                phone: "********21",
+
+                assignedDoctor:
+                    "DOC-2026-001",
+
+                medicalHistory: [
+
+                    {
+                        date: "2026-08-15",
+                        doctor: "Dr. Sanchayan Das",
+                        type: "General Consultation",
+                        diagnosis: "Seasonal fever",
+                        notes:
+                            "Patient advised rest and hydration."
+                    },
+
+                    {
+                        date: "2026-06-12",
+                        doctor: "Dr. Sanchayan Das",
+                        type: "Follow-up",
+                        diagnosis: "Recovered",
+                        notes:
+                            "Symptoms resolved."
+                    }
+
+                ]
+
+            },
+
+
+            {
+                id: "PAT-2026-002",
+                name: "Ananya Roy",
+                age: 24,
+                sex: "Female",
+                phone: "********45",
+
+                assignedDoctor:
+                    "DOC-2026-001",
+
+                medicalHistory: [
+
+                    {
+                        date: "2026-08-20",
+                        doctor: "Dr. Sanchayan Das",
+                        type: "General Consultation",
+                        diagnosis: "Migraine",
+                        notes:
+                            "Follow-up recommended."
+                    }
+
+                ]
+
+            },
+
+
+            {
+                id: "PAT-2026-003",
+                name: "Arjun Mukherjee",
+                age: 35,
+                sex: "Male",
+                phone: "********67",
+
+                assignedDoctor:
+                    "DOC-2026-001",
+
+                medicalHistory: []
+
+            }
+
+        ];
+
+
+        /*
+         * TODAY'S BOOKINGS
+         *
+         * Only consultations assigned to the
+         * current doctor are displayed.
+         */
+
+        let todayConsultations = [
+
+            {
+                id: "CONS-001",
+
+                patientId:
+                    "PAT-2026-001",
+
+                doctorId:
+                    "DOC-2026-001",
+
+                date:
+                    new Date().toISOString().split("T")[0],
+
+                time:
+                    "10:30 AM",
+
+                type:
+                    "General Consultation",
+
+                status:
+                    "booked"
+            },
+
+            {
+                id: "CONS-002",
+
+                patientId:
+                    "PAT-2026-002",
+
+                doctorId:
+                    "DOC-2026-001",
+
+                date:
+                    new Date().toISOString().split("T")[0],
+
+                time:
+                    "12:00 PM",
+
+                type:
+                    "Follow-up",
+
+                status:
+                    "booked"
+            }
+
+        ];
+
+
+        /* ========================================
+           INITIALIZATION
+        ======================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadDoctorData();
+
+                updateStatistics();
+
+                renderTodayConsultations();
+
+                renderPastPatients();
+
+                setupNavigation();
+
+                setupSearch();
+
+                setupConsultationForm();
+
+                setupLogout();
+
+            }
+        );
+
+
+        /* ========================================
+           LOAD DOCTOR DATA
+        ======================================== */
+
+        function loadDoctorData() {
+
+            const doctorName =
+                currentDoctor.name;
+
+            document.getElementById(
+                "doctorName"
+            ).textContent =
+                doctorName;
+
+            document.getElementById(
+                "welcomeDoctor"
+            ).textContent =
+                doctorName;
+
+
+            const nameParts =
+                doctorName
+                    .replace("Dr. ", "")
+                    .split(" ");
+
+            let initials = "";
+
+            if (nameParts.length >= 2) {
+
+                initials =
+                    nameParts[0][0] +
+                    nameParts[nameParts.length - 1][0];
+
+            } else {
+
+                initials =
+                    nameParts[0][0];
+
+            }
+
+            document.getElementById(
+                "doctorAvatar"
+            ).textContent =
+                initials.toUpperCase();
+
+        }
+
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+
+        function setupNavigation() {
+
+            const navItems =
+                document.querySelectorAll(
+                    ".nav-item"
+                );
+
+
+            navItems.forEach(
+                function (item) {
+
+                    item.addEventListener(
+                        "click",
+                        function () {
+
+                            const section =
+                                this.dataset.section;
+
+                            showSection(section);
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+        function showSection(sectionId) {
+
+            const sections =
+                document.querySelectorAll(
+                    ".dashboard-section"
+                );
+
+            sections.forEach(
+                function (section) {
+
+                    section.classList.remove(
+                        "active-section"
+                    );
+
+                }
+            );
+
+
+            const selectedSection =
+                document.getElementById(
+                    sectionId
+                );
+
+            if (selectedSection) {
+
+                selectedSection.classList.add(
+                    "active-section"
+                );
+
+            }
+
+
+            const navItems =
+                document.querySelectorAll(
+                    ".nav-item"
+                );
+
+            navItems.forEach(
+                function (item) {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                    if (
+                        item.dataset.section ===
+                        sectionId
+                    ) {
+
+                        item.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            const titles = {
+
+                dashboard:
+                    "Dashboard",
+
+                today:
+                    "Today's Consultation",
+
+                past:
+                    "My Past Patients"
+
+            };
+
+
+            document.getElementById(
+                "pageTitle"
+            ).textContent =
+                titles[sectionId] ||
+                "Dashboard";
+
+        }
+
+
+        /* ========================================
+           STATISTICS
+        ======================================== */
+
+        function updateStatistics() {
+
+            const doctorPatients =
+                patients.filter(
+                    function (patient) {
+
+                        return (
+                            patient.assignedDoctor ===
+                            currentDoctor.id
+                        );
+
+                    }
+                );
+
+
+            const doctorConsultations =
+                todayConsultations.filter(
+                    function (consultation) {
+
+                        return (
+                            consultation.doctorId ===
+                            currentDoctor.id
+                        );
+
+                    }
+                );
+
+
+            let completed =
+                0;
+
+            doctorPatients.forEach(
+                function (patient) {
+
+                    completed +=
+                        patient.medicalHistory.filter(
+                            function (record) {
+
+                                return (
+                                    record.doctor ===
+                                    currentDoctor.name
+                                );
+
+                            }
+                        ).length;
+
+                }
+            );
+
+
+            document.getElementById(
+                "totalPatients"
+            ).textContent =
+                doctorPatients.length;
+
+
+            document.getElementById(
+                "todayCount"
+            ).textContent =
+                doctorConsultations.length;
+
+
+            document.getElementById(
+                "completedCount"
+            ).textContent =
+                completed;
+
+
+            document.getElementById(
+                "pastPatientCount"
+            ).textContent =
+                doctorPatients.filter(
+                    function (patient) {
+
+                        return (
+                            patient.medicalHistory
+                                .some(
+                                    function (record) {
+
+                                        return (
+                                            record.doctor ===
+                                            currentDoctor.name
+                                        );
+
+                                    }
+                                )
+                        );
+
+                    }
+                ).length;
+
+        }
+
+
+        /* ========================================
+           PATIENT SEARCH
+        ======================================== */
+
+        function setupSearch() {
+
+            const searchInput =
+                document.getElementById(
+                    "patientSearch"
+                );
+
+            const searchButton =
+                document.getElementById(
+                    "searchPatientBtn"
+                );
+
+
+            searchButton.addEventListener(
+                "click",
+                searchPatient
+            );
+
+
+            searchInput.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        searchPatient();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        function searchPatient() {
+
+            const value =
+                document.getElementById(
+                    "patientSearch"
+                ).value
+                .trim()
+                .toLowerCase();
+
+
+            const result =
+                document.getElementById(
+                    "patientSearchResult"
+                );
+
+
+            if (!value) {
+
+                result.innerHTML = "";
+
+                return;
+
+            }
+
+
+            /*
+             * Doctor can search only patients
+             * relevant to the doctor's assigned duties.
+             */
+
+            const matches =
+                patients.filter(
+                    function (patient) {
+
+                        const matchesName =
+                            patient.name
+                                .toLowerCase()
+                                .includes(value);
+
+                        const matchesId =
+                            patient.id
+                                .toLowerCase()
+                                .includes(value);
+
+                        return (
+                            matchesName ||
+                            matchesId
+                        );
+
+                    }
+                );
+
+
+            if (matches.length === 0) {
+
+                result.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ?
+                        </div>
+
+                        <h3>
+                            Patient Not Found
+                        </h3>
+
+                        <p>
+                            No registered patient was found
+                            with that name or Patient ID.
+                            If the patient is new, registration
+                            must be completed by a receptionist
+                            or through self-registration.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            result.innerHTML =
+                matches
+                    .map(
+                        createPatientCard
+                    )
+                    .join("");
+
+        }
+
+
+        /* ========================================
+           PATIENT CARD
+        ======================================== */
+
+        function createPatientCard(
+            patient
+        ) {
+
+            const initials =
+                getInitials(
+                    patient.name
+                );
+
+
+            return `
+
+                <div class="patient-card">
+
+                    <div class="patient-top">
+
+                        <div class="patient-avatar">
+                            ${initials}
+                        </div>
+
+                        <div>
+
+                            <h3 class="patient-name">
+                                ${patient.name}
+                            </h3>
+
+                            <span class="patient-id">
+                                ${patient.id}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="patient-details">
+
+                        <div class="patient-detail">
+
+                            <span>
+                                Age
+                            </span>
+
+                            <span>
+                                ${patient.age}
+                            </span>
+
+                        </div>
+
+
+                        <div class="patient-detail">
+
+                            <span>
+                                Sex
+                            </span>
+
+                            <span>
+                                ${patient.sex}
+                            </span>
+
+                        </div>
+
+
+                        <div class="patient-detail">
+
+                            <span>
+                                Patient ID
+                            </span>
+
+                            <span>
+                                ${patient.id}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="patient-actions">
+
+                        <button
+                            class="secondary-btn"
+                            onclick="viewMedicalHistory('${patient.id}')"
+                        >
+                            Medical History
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* ========================================
+           TODAY'S CONSULTATIONS
+        ======================================== */
+
+        function renderTodayConsultations() {
+
+            const container =
+                document.getElementById(
+                    "todayConsultations"
+                );
+
+
+            const consultations =
+                todayConsultations.filter(
+                    function (consultation) {
+
+                        return (
+                            consultation.doctorId ===
+                            currentDoctor.id
+                        );
+
+                    }
+                );
+
+
+            if (
+                consultations.length ===
+                0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◷
+                        </div>
+
+                        <h3>
+                            No Consultations Today
+                        </h3>
+
+                        <p>
+                            You currently have no booked
+                            consultations assigned to you today.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                consultations
+                    .map(
+                        function (
+                            consultation
+                        ) {
+
+                            const patient =
+                                patients.find(
+                                    function (
+                                        p
+                                    ) {
+
+                                        return (
+                                            p.id ===
+                                            consultation.patientId
+                                        );
+
+                                    }
+                                );
+
+
+                            if (!patient) {
+                                return "";
+                            }
+
+
+                            return `
+
+                                <div
+                                    class="consultation-card"
+                                >
+
+                                    <div
+                                        class="consultation-main"
+                                    >
+
+                                        <div
+                                            class="consultation-avatar"
+                                        >
+                                            ${getInitials(
+                                                patient.name
+                                            )}
+                                        </div>
+
+
+                                        <div
+                                            class="consultation-info"
+                                        >
+
+                                            <h3>
+                                                ${patient.name}
+                                            </h3>
+
+                                            <p>
+                                                Patient ID:
+                                                ${patient.id}
+                                            </p>
+
+                                            <p>
+                                                ${consultation.type}
+                                            </p>
+
+                                            <div
+                                                class="consultation-date"
+                                            >
+                                                Today ·
+                                                ${consultation.time}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div
+                                        class="consultation-actions"
+                                    >
+
+                                        <span
+                                            class="status booked"
+                                        >
+                                            BOOKED
+                                        </span>
+
+                                        <button
+                                            class="secondary-btn"
+                                            onclick="viewMedicalHistory('${patient.id}')"
+                                        >
+                                            Medical History
+                                        </button>
+
+                                        <button
+                                            class="primary-btn"
+                                            onclick="openConsultation('${consultation.id}')"
+                                        >
+                                            Add Consultation
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+
+        /* ========================================
+           OPEN CONSULTATION
+        ======================================== */
+
+        function openConsultation(
+            consultationId
+        ) {
+
+            /*
+             * IMPORTANT:
+             * The doctor can only open consultations
+             * assigned to them.
+             */
+
+            const consultation =
+                todayConsultations.find(
+                    function (item) {
+
+                        return (
+                            item.id ===
+                            consultationId &&
+                            item.doctorId ===
+                            currentDoctor.id
+                        );
+
+                    }
+                );
+
+
+            if (!consultation) {
+
+                alert(
+                    "This consultation is not assigned to you."
+                );
+
+                return;
+
+            }
+
+
+            const patient =
+                patients.find(
+                    function (item) {
+
+                        return (
+                            item.id ===
+                            consultation.patientId
+                        );
+
+                    }
+                );
+
+
+            if (!patient) {
+
+                alert(
+                    "Patient record could not be found."
+                );
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "consultationPatientId"
+            ).value =
+                patient.id;
+
+
+            document.getElementById(
+                "formPatientId"
+            ).value =
+                patient.id;
+
+
+            document.getElementById(
+                "formPatientName"
+            ).value =
+                patient.name;
+
+
+            document.getElementById(
+                "consultationDate"
+            ).value =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+
+            document.getElementById(
+                "consultationForm"
+            ).dataset.consultationId =
+                consultation.id;
+
+
+            document.getElementById(
+                "consultationModal"
+            ).classList.add("show");
+
+        }
+
+
+        /* ========================================
+           CONSULTATION FORM
+        ======================================== */
+
+        function setupConsultationForm() {
+
+            const form =
+                document.getElementById(
+                    "consultationForm"
+                );
+
+
+            form.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+
+                    const patientId =
+                        document.getElementById(
+                            "consultationPatientId"
+                        ).value;
+
+
+                    const consultationId =
+                        form.dataset.consultationId;
+
+
+                    const consultation =
+                        todayConsultations.find(
+                            function (item) {
+
+                                return (
+                                    item.id ===
+                                    consultationId &&
+                                    item.doctorId ===
+                                    currentDoctor.id
+                                );
+
+                            }
+                        );
+
+
+                    if (!consultation) {
+
+                        alert(
+                            "Unauthorized consultation."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const patient =
+                        patients.find(
+                            function (item) {
+
+                                return (
+                                    item.id ===
+                                    patientId
+                                );
+
+                            }
+                        );
+
+
+                    if (!patient) {
+
+                        alert(
+                            "Patient not found."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const record = {
+
+                        date:
+                            document.getElementById(
+                                "consultationDate"
+                            ).value,
+
+                        doctor:
+                            currentDoctor.name,
+
+                        type:
+                            document.getElementById(
+                                "consultationType"
+                            ).value,
+
+                        diagnosis:
+                            document.getElementById(
+                                "diagnosis"
+                            ).value,
+
+                        complaint:
+                            document.getElementById(
+                                "chiefComplaint"
+                            ).value,
+
+                        findings:
+                            document.getElementById(
+                                "clinicalFindings"
+                            ).value,
+
+                        treatment:
+                            document.getElementById(
+                                "treatment"
+                            ).value,
+
+                        notes:
+                            document.getElementById(
+                                "doctorNotes"
+                            ).value
+
+                    };
+
+
+                    patient.medicalHistory.push(
+                        record
+                    );
+
+
+                    /*
+                     * Mark today's consultation
+                     * as completed.
+                     */
+
+                    consultation.status =
+                        "completed";
+
+
+                    alert(
+                        "Consultation saved successfully."
+                    );
+
+
+                    closeModal(
+                        "consultationModal"
+                    );
+
+
+                    form.reset();
+
+                    delete form.dataset.consultationId;
+
+
+                    updateStatistics();
+
+                    renderTodayConsultations();
+
+                    renderPastPatients();
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           MEDICAL HISTORY
+        ======================================== */
+
+        function viewMedicalHistory(
+            patientId
+        ) {
+
+            const patient =
+                patients.find(
+                    function (item) {
+
+                        return (
+                            item.id ===
+                            patientId
+                        );
+
+                    }
+                );
+
+
+            if (!patient) {
+
+                alert(
+                    "Patient not found."
+                );
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "historyPatientName"
+            ).textContent =
+                patient.name +
+                " — " +
+                patient.id;
+
+
+            const history =
+                patient.medicalHistory;
+
+
+            if (
+                history.length ===
+                0
+            ) {
+
+                document.getElementById(
+                    "historyContent"
+                ).innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            +
+                        </div>
+
+                        <h3>
+                            No Medical History
+                        </h3>
+
+                        <p>
+                            No previous consultation records
+                            are available for this patient.
+                        </p>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                document.getElementById(
+                    "historyContent"
+                ).innerHTML = `
+
+                    <div class="history-timeline">
+
+                        ${history
+                            .slice()
+                            .reverse()
+                            .map(
+                                function (
+                                    record
+                                ) {
+
+                                    return `
+
+                                        <div
+                                            class="history-item"
+                                        >
+
+                                            <div
+                                                class="date"
+                                            >
+                                                ${record.date}
+                                            </div>
+
+                                            <h4>
+                                                ${record.type}
+                                            </h4>
+
+                                            <p>
+                                                <strong>
+                                                    Doctor:
+                                                </strong>
+                                                ${record.doctor}
+                                            </p>
+
+                                            <p>
+                                                <strong>
+                                                    Diagnosis:
+                                                </strong>
+                                                ${record.diagnosis}
+                                            </p>
+
+                                            <p>
+                                                <strong>
+                                                    Complaint:
+                                                </strong>
+                                                ${record.complaint || "Not recorded"}
+                                            </p>
+
+                                            <p>
+                                                <strong>
+                                                    Findings:
+                                                </strong>
+                                                ${record.findings || "Not recorded"}
+                                            </p>
+
+                                            <p>
+                                                <strong>
+                                                    Treatment:
+                                                </strong>
+                                                ${record.treatment || "Not recorded"}
+                                            </p>
+
+                                            <p>
+                                                <strong>
+                                                    Notes:
+                                                </strong>
+                                                ${record.notes || "None"}
+                                            </p>
+
+                                        </div>
+
+                                    `;
+
+                                }
+                            )
+                            .join("")}
+
+                    </div>
+
+                `;
+
+            }
+
+
+            document.getElementById(
+                "historyModal"
+            ).classList.add("show");
+
+        }
+
+
+        /* ========================================
+           PAST PATIENTS
+        ======================================== */
+
+        function renderPastPatients(
+            searchValue = ""
+        ) {
+
+            const container =
+                document.getElementById(
+                    "pastPatients"
+                );
+
+
+            const search =
+                searchValue
+                    .trim()
+                    .toLowerCase();
+
+
+            /*
+             * Only patients who have previously
+             * consulted this doctor.
+             */
+
+            let pastPatients =
+                patients.filter(
+                    function (patient) {
+
+                        return (
+                            patient.medicalHistory
+                                .some(
+                                    function (record) {
+
+                                        return (
+                                            record.doctor ===
+                                            currentDoctor.name
+                                        );
+
+                                    }
+                                )
+                        );
+
+                    }
+                );
+
+
+            if (search) {
+
+                pastPatients =
+                    pastPatients.filter(
+                        function (patient) {
+
+                            return (
+                                patient.name
+                                    .toLowerCase()
+                                    .includes(search)
+                                ||
+                                patient.id
+                                    .toLowerCase()
+                                    .includes(search)
+                            );
+
+                        }
+                    );
+
+            }
+
+
+            if (
+                pastPatients.length ===
+                0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ▣
+                        </div>
+
+                        <h3>
+                            No Past Patients Found
+                        </h3>
+
+                        <p>
+                            Patients you have previously
+                            consulted will appear here.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                pastPatients
+                    .map(
+                        createPatientCard
+                    )
+                    .join("");
+
+        }
+
+
+        function setupPastPatientSearch() {
+
+            const input =
+                document.getElementById(
+                    "pastPatientSearch"
+                );
+
+
+            input.addEventListener(
+                "input",
+                function () {
+
+                    renderPastPatients(
+                        this.value
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           MODALS
+        ======================================== */
+
+        function closeModal(
+            modalId
+        ) {
+
+            document
+                .getElementById(modalId)
+                .classList.remove("show");
+
+        }
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target.classList
+                        .contains("modal-overlay")
+                ) {
+
+                    event.target.classList
+                        .remove("show");
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           LOGOUT
+        ======================================== */
+
+        function setupLogout() {
+
+            document.getElementById(
+                "logoutBtn"
+            ).addEventListener(
+                "click",
+                function () {
+
+                    const confirmed =
+                        confirm(
+                            "Are you sure you want to logout?"
+                        );
+
+
+                    if (confirmed) {
+
+                        /*
+                         * Replace this with your
+                         * real authentication logout.
+                         */
+
+                        localStorage.removeItem(
+                            "currentUser"
+                        );
+
+                        window.location.href = ".../Login/index.html";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           HELPERS
+        ======================================== */
+
+        function getInitials(
+            name
+        ) {
+
+            const parts =
+                name
+                    .replace("Dr. ", "")
+                    .trim()
+                    .split(" ");
+
+
+            if (
+                parts.length >= 2
+            ) {
+
+                return (
+                    parts[0][0] +
+                    parts[parts.length - 1][0]
+                ).toUpperCase();
+
+            }
+
+
+            return (
+                parts[0][0] || "P"
+            ).toUpperCase();
+
+        }
+
+
+        /* ========================================
+           CLOSE MODAL WITH ESC
+        ======================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    document
+                        .querySelectorAll(
+                            ".modal-overlay.show"
+                        )
+                        .forEach(
+                            function (modal) {
+
+                                modal.classList
+                                    .remove("show");
+
+                            }
+                        );
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           START PAST PATIENT SEARCH
+        ======================================== */
+
+        setupPastPatientSearch();
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,757 @@
+
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   BODY
+======================================== */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f7faff;
+
+    color: #14213d;
+
+    min-height: 100vh;
+}
+
+
+/* ========================================
+   MAIN AUTH WRAPPER
+======================================== */
+
+.auth-wrapper {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+
+/* ========================================
+   AUTHENTICATION CARD
+======================================== */
+
+.auth-card {
+    width: 100%;
+    max-width: 1050px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 45px rgba(20, 50, 90, 0.10);
+
+    overflow: hidden;
+
+    display: grid;
+
+    grid-template-columns: 38% 62%;
+}
+
+
+/* ========================================
+   LEFT BRAND SECTION
+======================================== */
+
+.card-left {
+    background:
+        linear-gradient(
+            145deg,
+            #eef7ff,
+            #ffffff
+        );
+
+    padding: 50px 40px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border-right: 1px solid #e6edf5;
+}
+
+
+/* ========================================
+   LOGO
+======================================== */
+
+.brand-logo {
+    width: 260px;
+    max-width: 100%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    margin-bottom: 25px;
+}
+
+
+/* ========================================
+   BRAND HEADER
+======================================== */
+
+.auth-header h2 {
+    font-size: 25px;
+
+    font-weight: 700;
+
+    color: #102444;
+
+    margin-bottom: 10px;
+}
+
+
+.auth-header p {
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    max-width: 300px;
+}
+
+
+/* ========================================
+   ESTABLISHED TEXT
+======================================== */
+
+.estd-text {
+    margin-top: 30px;
+
+    color: #398fe0;
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    font-weight: 600;
+}
+
+
+/* ========================================
+   RIGHT FORM SECTION
+======================================== */
+
+.card-right {
+    padding: 50px;
+
+    background: #ffffff;
+
+    overflow-y: auto;
+}
+
+
+/* ========================================
+   AUTH TABS
+======================================== */
+
+.auth-tabs {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 5px;
+
+    padding: 5px;
+
+    margin-bottom: 32px;
+
+    background: #f1f6fb;
+
+    border: 1px solid #e0e8f0;
+
+    border-radius: 10px;
+}
+
+
+/* ========================================
+   TAB BUTTON
+======================================== */
+
+.tab-btn {
+    height: 42px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+/* Active tab */
+
+.tab-btn.active {
+    background: #398fe0;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 4px 10px rgba(57, 143, 224, 0.18);
+}
+
+
+/* Hover */
+
+.tab-btn:not(.active):hover {
+    background: #e8f4ff;
+
+    color: #267dce;
+}
+
+
+/* ========================================
+   HIDDEN FORM
+======================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ========================================
+   FORM GROUP
+======================================== */
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 18px;
+}
+
+
+/* ========================================
+   LABEL
+======================================== */
+
+.form-group label {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #243b5a;
+
+    margin-bottom: 8px;
+
+    line-height: 1.4;
+}
+
+
+/* ========================================
+   INPUT / SELECT / TEXTAREA
+======================================== */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    border: 1px solid #d7e0ea;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #14213d;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+
+/* ========================================
+   INPUT & SELECT
+======================================== */
+
+.form-group input,
+.form-group select {
+    height: 48px;
+
+    padding: 0 14px;
+}
+
+
+/* ========================================
+   TEXTAREA
+======================================== */
+
+.form-group textarea {
+    padding: 12px 14px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   PLACEHOLDER
+======================================== */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a0adbd;
+}
+
+
+/* ========================================
+   FOCUS
+======================================== */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #459de8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(69, 157, 232, 0.12);
+}
+
+
+/* ========================================
+   SELECT
+======================================== */
+
+.form-group select {
+    cursor: pointer;
+
+    appearance: none;
+
+    padding-right: 40px;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            #64748b 50%
+        ),
+        linear-gradient(
+            135deg,
+            #64748b 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 18px) 20px,
+        calc(100% - 13px) 20px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+}
+
+
+.form-group select option {
+    background: #ffffff;
+
+    color: #14213d;
+}
+
+
+/* ========================================
+   FORM ROW
+======================================== */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+}
+
+
+/* ========================================
+   READONLY AGE
+======================================== */
+
+.form-group input[readonly] {
+    background: #f3f7fb;
+
+    color: #64748b;
+
+    cursor: not-allowed;
+}
+
+
+/* ========================================
+   INFO BOX
+======================================== */
+
+.info-box {
+    margin-bottom: 22px;
+
+    padding: 16px 18px;
+
+    border: 1px solid #f0d98a;
+
+    border-radius: 10px;
+
+    background: #fffbea;
+
+    color: #665315;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   OPTIONAL TAG
+======================================== */
+
+.optional-tag {
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    font-weight: 400;
+}
+
+
+/* ========================================
+   FORGOT PASSWORD ROW
+======================================== */
+
+.form-sub-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: -5px;
+
+    margin-bottom: 20px;
+}
+
+
+/* ========================================
+   FORGOT PASSWORD
+======================================== */
+
+.forgot-link {
+    color: #398fe0;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.forgot-link:hover {
+    color: #267dce;
+
+    text-decoration: underline;
+}
+
+
+/* ========================================
+   FORM ACTIONS
+======================================== */
+
+.form-actions {
+    margin-top: 5px;
+}
+
+
+/* ========================================
+   PRIMARY BUTTON
+======================================== */
+
+.primary-btn {
+    height: 50px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #398fe0;
+
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+/* Full width */
+
+.btn-full {
+    width: 100%;
+}
+
+
+/* Hover */
+
+.primary-btn:hover {
+    background: #267dce;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(57, 143, 224, 0.18);
+}
+
+
+/* Active */
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   ERROR MESSAGE
+======================================== */
+
+.error-message {
+    display: none;
+
+    color: #dc3545;
+
+    font-size: 11px;
+
+    margin-top: 6px;
+}
+
+
+.error-message.show {
+    display: block;
+}
+
+
+/* ========================================
+   SUCCESS MESSAGE
+======================================== */
+
+.success-message {
+    display: none;
+
+    color: #398fe0;
+
+    font-size: 11px;
+
+    margin-top: 6px;
+}
+
+
+.success-message.show {
+    display: block;
+}
+
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+.card-right::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.card-right::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.card-right::-webkit-scrollbar-thumb {
+    background: #d7e0ea;
+
+    border-radius: 10px;
+}
+
+
+.card-right::-webkit-scrollbar-thumb:hover {
+    background: #b9c9d8;
+}
+
+
+/* ========================================
+   RESPONSIVE - TABLET
+======================================== */
+
+@media (max-width: 850px) {
+
+    .auth-card {
+        grid-template-columns: 1fr;
+
+        max-width: 650px;
+    }
+
+
+    .card-left {
+        border-right: none;
+
+        border-bottom: 1px solid #e6edf5;
+
+        padding: 35px 25px;
+    }
+
+
+    .brand-logo {
+        width: 210px;
+    }
+
+
+    .auth-header p {
+        max-width: 450px;
+    }
+
+
+    .card-right {
+        padding: 35px 30px;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE - MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .auth-wrapper {
+        padding: 20px 12px;
+    }
+
+
+    .auth-card {
+        border-radius: 14px;
+    }
+
+
+    .card-left {
+        padding: 30px 20px;
+    }
+
+
+    .brand-logo {
+        width: 190px;
+    }
+
+
+    .card-right {
+        padding: 28px 20px;
+    }
+
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+
+    .auth-header h2 {
+        font-size: 23px;
+    }
+
+
+    .auth-tabs {
+        margin-bottom: 25px;
+    }
+
+
+    .primary-btn {
+        height: 48px;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE - SMALL MOBILE
+======================================== */
+
+@media (max-width: 380px) {
+
+    .auth-wrapper {
+        padding: 15px 10px;
+    }
+
+
+    .card-left {
+        padding: 25px 15px;
+    }
+
+
+    .card-right {
+        padding: 25px 15px;
+    }
+
+
+    .brand-logo {
+        width: 165px;
+    }
+
+
+    .auth-header h2 {
+        font-size: 21px;
+    }
+
+
+    .auth-header p {
+        font-size: 12px;
+    }
+
+
+    .form-group input,
+    .form-group select {
+        height: 45px;
+    }
+
+
+    .tab-btn {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>JeevanSetu - Patient Management System</title>
+    <link rel="stylesheet" href="style_home.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="nav-container">
+        <a href="#home" class="brand">
+            <img src="../Artifacts/Arambh_Health_logo.png" alt="JeevanSetu Logo" class="brand-logo">
+            <div class="brand-text">
+                <span>Arambh Health</span>
+                <small>Patient Management System</small>
+            </div>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#roles">Roles</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="Emergency.html" class="emergency-request-btn" >Need Ambulance</a>
+            <a href="Index.html" class="login-btn">Login <span>→</span></a>
+        </div>
+
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+    </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span></span>
+                Connected Healthcare Platform
+            </div>
+
+            <h1>
+                Healthcare Records.
+                <strong>Connected.</strong>
+                <strong>Simplified.</strong>
+            </h1>
+
+            <p>
+                Arambh Health connects patients, doctors, receptionists and
+                healthcare administrators through a secure patient record
+                and case-taking platform.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="Index.html" class="primary-btn">
+                    Get Started <span>→</span>
+                </a>
+
+                <a href="#features" class="secondary-btn">
+                    Explore Features
+                </a>
+            </div>
+
+            <div class="hero-trust">
+                <div>
+                    <strong>RBAC</strong>
+                    <span>Role-Based Access</span>
+                </div>
+
+                <div>
+                    <strong>AI</strong>
+                    <span>Case Structuring</span>
+                </div>
+
+                <div>
+                    <strong>24/7</strong>
+                    <span>Connected Records</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="dashboard-preview">
+                <div class="preview-top">
+                    <div>
+                        <span class="preview-label">Patient Overview</span>
+                        <h3>Patient Dashboard</h3>
+                    </div>
+                    <span class="online-status">● Online</span>
+                </div>
+
+                <div class="patient-preview">
+                    <div class="patient-avatar">PS</div>
+                    <div>
+                        <strong>Rahul Sharma</strong>
+                        <span>Patient ID: P12345</span>
+                    </div>
+                </div>
+
+                <div class="preview-stats">
+                    <div>
+                        <span>Consultations</span>
+                        <strong>12</strong>
+                    </div>
+
+                    <div>
+                        <span>Reports</span>
+                        <strong>06</strong>
+                    </div>
+
+                    <div>
+                        <span>Appointments</span>
+                        <strong>05</strong>
+                    </div>
+                </div>
+
+                <div class="timeline-preview">
+                    <div class="timeline-heading">
+                        <strong>Patient Timeline</strong>
+                        <span>View all</span>
+                    </div>
+
+                    <div class="timeline-line">
+                        <div class="timeline-entry">
+                            <i></i>
+                            <div>
+                                <strong>Patient Registered</strong>
+                                <span>Account created</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-entry">
+                            <i></i>
+                            <div>
+                                <strong>Consultation Completed</strong>
+                                <span>Clinical record updated</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-entry">
+                            <i></i>
+                            <div>
+                                <strong>Follow-up Scheduled</strong>
+                                <span>Next consultation booked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="floating-card ai-card">
+                <span class="floating-icon">AI</span>
+                <div>
+                    <strong>AI Case Structuring</strong>
+                    <small>Clinical information organized</small>
+                </div>
+            </div>
+
+            <div class="floating-card secure-card">
+                <span class="floating-icon">✓</span>
+                <div>
+                    <strong>Access Controlled</strong>
+                    <small>Protected by RBAC</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="emergency" id="emergency">
+    <div class="emergency-container">
+        <div class="emergency-icon">+</div>
+
+        <div class="emergency-content">
+            <span class="section-tag">EMERGENCY ASSISTANCE</span>
+            <h2>Need an ambulance?</h2>
+            <p>
+                Request emergency transportation and provide essential
+                information about your situation. JeevanSetu can connect
+                the request with the designated emergency hotline for
+                coordination with available hospital and ambulance services.
+            </p>
+        </div>
+
+        <a href="Emergency.html" class="emergency-request-btn">
+            Need Ambulance →
+        </a>
+    </div>
+</section>
+
+<section class="features section" id="features">
+    <div class="section-heading">
+        <span class="section-tag">CORE FEATURES</span>
+        <h2>Everything Connected</h2>
+        <p>
+            Essential healthcare workflows brought together into one
+            centralized patient management platform.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+        <article class="feature-card blue">
+            <div class="feature-icon">♙</div>
+            <h3>Patient Management</h3>
+            <p>
+                Register, search and manage patient records through
+                structured digital profiles.
+            </p>
+            <a href="#">Learn more →</a>
+        </article>
+
+        <article class="feature-card teal">
+            <div class="feature-icon">⚕</div>
+            <h3>Consultation Management</h3>
+            <p>
+                Record consultations, clinical notes, treatment details
+                and follow-up information.
+            </p>
+            <a href="#">Learn more →</a>
+        </article>
+
+        <article class="feature-card purple">
+            <div class="feature-icon">AI</div>
+            <h3>AI Case Structuring</h3>
+            <p>
+                Convert free-text symptoms and clinical information into
+                organized structured case data.
+            </p>
+            <a href="#">Learn more →</a>
+        </article>
+
+        <article class="feature-card orange">
+            <div class="feature-icon">◈</div>
+            <h3>Role-Based Access</h3>
+            <p>
+                Control access to patient and administrative information
+                according to defined responsibilities.
+            </p>
+            <a href="#">Learn more →</a>
+        </article>
+    </div>
+</section>
+
+<section class="workflow section" id="how-it-works">
+    <div class="section-heading">
+        <span class="section-tag">WORKFLOW</span>
+        <h2>How JeevanSetu Works</h2>
+        <p>
+            A structured workflow connecting registration, consultation
+            and long-term patient care.
+        </p>
+    </div>
+
+    <div class="workflow-grid">
+        <div class="workflow-card">
+            <span>01</span>
+            <div class="workflow-icon">+</div>
+            <h3>Register</h3>
+            <p>
+                Create the patient's digital profile and securely record
+                essential information.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <span>02</span>
+            <div class="workflow-icon">⚕</div>
+            <h3>Consult</h3>
+            <p>
+                Doctors record symptoms, medical history, examination
+                details and clinical notes.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <span>03</span>
+            <div class="workflow-icon">AI</div>
+            <h3>Structure</h3>
+            <p>
+                AI-assisted tools organize free-text clinical information
+                into structured fields for doctor review.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <span>04</span>
+            <div class="workflow-icon">↗</div>
+            <h3>Track</h3>
+            <p>
+                Follow the patient's medical history, consultations and
+                follow-up timeline from one place.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="roles section" id="roles">
+    <div class="section-heading">
+        <span class="section-tag">ACCESS CONTROL</span>
+        <h2>Built for Every Role</h2>
+        <p>
+            Every user receives an interface designed around their
+            responsibilities and permissions.
+        </p>
+    </div>
+
+    <div class="role-grid">
+
+        <article class="role-card super-admin">
+            <div class="role-top">
+                <div class="role-icon">SA</div>
+                <span>LEVEL 01</span>
+            </div>
+
+            <h3>Super Admin</h3>
+
+            <p>
+                Highest-level system authority responsible for
+                system-wide controls and administrator approval.
+            </p>
+
+            <ul>
+                <li>Admin approval</li>
+                <li>System controls</li>
+                <li>Super Admin management</li>
+            </ul>
+        </article>
+
+        <article class="role-card admin">
+            <div class="role-top">
+                <div class="role-icon">A</div>
+                <span>LEVEL 02</span>
+            </div>
+
+            <h3>Admin</h3>
+
+            <p>
+                Manages hospital operations, staff and administrative
+                activities within assigned permissions.
+            </p>
+
+            <ul>
+                <li>Staff management</li>
+                <li>Audit & management</li>
+                <li>Operational controls</li>
+            </ul>
+        </article>
+
+        <article class="role-card doctor">
+            <div class="role-top">
+                <div class="role-icon">DR</div>
+                <span>LEVEL 03</span>
+            </div>
+
+            <h3>Doctor</h3>
+
+            <p>
+                Handles clinical workflows and manages patient
+                consultations and medical information.
+            </p>
+
+            <ul>
+                <li>Patient records</li>
+                <li>Case taking</li>
+                <li>Clinical notes</li>
+            </ul>
+        </article>
+
+        <article class="role-card receptionist">
+            <div class="role-top">
+                <div class="role-icon">R</div>
+                <span>LEVEL 04</span>
+            </div>
+
+            <h3>Receptionist</h3>
+
+            <p>
+                Handles registration, appointments and permitted
+                patient information.
+            </p>
+
+            <ul>
+                <li>Patient registration</li>
+                <li>Appointments</li>
+                <li>Basic patient records</li>
+            </ul>
+        </article>
+
+        <article class="role-card patient">
+            <div class="role-top">
+                <div class="role-icon">P</div>
+                <span>LEVEL 05</span>
+            </div>
+
+            <h3>Patient</h3>
+
+            <p>
+                Accesses personal health records, appointments,
+                consultations and verified healthcare services.
+            </p>
+
+            <ul>
+                <li>Personal health timeline</li>
+                <li>Doctor & hospital search</li>
+                <li>Online consultation requests</li>
+            </ul>
+        </article>
+
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="about-container">
+        <div>
+            <span class="section-tag">ABOUT JEEVANSETU</span>
+            <h2>One connected bridge between patients and healthcare.</h2>
+        </div>
+
+        <p>
+            JeevanSetu is designed as a centralized patient care-taking
+            platform where patient registration, medical case-taking,
+            consultation history, follow-ups and role-based access can
+            work together through a single digital workflow.
+        </p>
+    </div>
+</section>
+
+<section class="contact section" id="contact">
+    <div class="section-heading">
+        <span class="section-tag">CONTACT</span>
+        <h2>Get in Touch</h2>
+        <p>
+            Have questions about JeevanSetu? Contact the team.
+        </p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-card">
+            <span>☎</span>
+            <h3>Phone</h3>
+            <p>+91 12345 67890</p>
+        </div>
+
+        <div class="contact-card">
+            <span>@</span>
+            <h3>Email</h3>
+            <p>support@jeevansetu.com</p>
+        </div>
+
+        <div class="contact-card">
+            <span>⌖</span>
+            <h3>Location</h3>
+            <p>Kolkata, West Bengal, India</p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <img src="../Artifacts/Arambh_Health_logo.png" alt="JeevanSetu Logo">
+                <div>
+                    <h2>Arambh Health</h2>
+                    <span>Patient Management System</span>
+                </div>
+            </div>
+
+            <p>
+                A connected system for managing patient records,
+                consultations and clinical workflows.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#roles">Roles</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Support</h3>
+            <a href="#">Help Center</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#contact">Contact Us</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <p>+91 12345 67890</p>
+            <p>support@jeevansetu.com</p>
+            <p>Kolkata, West Bengal, India</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Arambh Health. Built by Team Nivox. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const navLinksContainer = document.querySelector(".nav-links");
+
+    // ================================
+    // MOBILE MENU
+    // ================================
+    if (mobileMenu && navLinksContainer) {
+        mobileMenu.addEventListener("click", function () {
+            navLinksContainer.classList.toggle("show");
+        });
+    }
+
+    // ================================
+    // SMOOTH SCROLLING
+    // ================================
+    const hashLinks = document.querySelectorAll('a[href^="#"]');
+
+    hashLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const targetId = link.getAttribute("href");
+
+            if (!targetId || targetId === "#") {
+                return;
+            }
+
+            const target = document.querySelector(targetId);
+
+            if (target) {
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+                if (navLinksContainer) {
+                    navLinksContainer.classList.remove("show");
+                }
+            }
+        });
+    });
+
+    // ================================
+    // LOGIN BUTTON
+    // ================================
+    const loginButtons = document.querySelectorAll(
+        ".login-btn, a[href*='Index.html']"
+    );
+
+    loginButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            const href = button.getAttribute("href");
+
+            if (
+                href &&
+                href.includes("Index.html")
+            ) {
+                event.preventDefault();
+                window.location.href = "Index.html";
+            }
+        });
+    });
+
+    // ================================
+    // GET STARTED BUTTON
+    // ================================
+    const getStartedButtons = document.querySelectorAll(
+        ".get-started-btn"
+    );
+
+    getStartedButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+            window.location.href = "Index.html";
+        });
+    });
+
+    // ================================
+    // NEED AMBULANCE BUTTON
+    // ================================
+    const ambulanceButtons = document.querySelectorAll(
+        ".ambulance-btn, .need-ambulance-btn"
+    );
+
+    ambulanceButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const emergencySection = document.getElementById("emergency");
+
+            if (emergencySection) {
+                emergencySection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        });
+    });
+
+    // ================================
+    // EMERGENCY REQUEST BUTTON
+    // ================================
+    const emergencyRequestButtons = document.querySelectorAll(
+        ".emergency-request-btn, .request-ambulance-btn"
+    );
+
+    emergencyRequestButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+            window.location.href = "Emergency.html";
+        });
+    });
+
+    // ================================
+    // ANY LINK TO EMERGENCY.HTML
+    // ================================
+    const emergencyLinks = document.querySelectorAll(
+        'a[href*="Emergency.html"], a[href*="emergency.html"]'
+    );
+
+    emergencyLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            window.location.href = "Emergency.html";
+        });
+    });
+
+    // ================================
+    // LEARN MORE
+    // ================================
+    const learnMoreButtons = document.querySelectorAll(
+        ".learn-more-btn"
+    );
+
+    learnMoreButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const featuresSection = document.getElementById("features");
+
+            if (featuresSection) {
+                featuresSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        });
+    });
+
+    // ================================
+    // NAVIGATION ACTIVE STATE
+    // ================================
+    const sections = document.querySelectorAll("section[id]");
+    const navigationLinks = document.querySelectorAll(
+        ".navbar a[href^='#'], .nav-links a[href^='#']"
+    );
+
+    function updateActiveNavigation() {
+        let currentSection = "";
+
+        sections.forEach(function (section) {
+            const sectionTop = section.offsetTop - 150;
+            const sectionBottom =
+                sectionTop + section.offsetHeight;
+
+            if (
+                window.scrollY >= sectionTop &&
+                window.scrollY < sectionBottom
+            ) {
+                currentSection = section.getAttribute("id");
+            }
+        });
+
+        navigationLinks.forEach(function (link) {
+            link.classList.remove("active");
+
+            if (
+                link.getAttribute("href") ===
+                "#" + currentSection
+            ) {
+                link.classList.add("active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", updateActiveNavigation);
+
+    updateActiveNavigation();
+});
+</script>
+</body>
+</html>
